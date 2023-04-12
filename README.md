@@ -16,6 +16,12 @@
 
 Blazingly Fast IDE for Web Development using Neovim is a powerful and efficient integrated development environment designed for web developers.
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/86684667/231339807-42188b62-4c23-44fb-8a3e-6ce0eb7ac89c.png" width = 90% />
+<img src="https://user-images.githubusercontent.com/86684667/231339935-206be3f3-d262-4f81-b455-60c5f4837d1d.png" width = 90% />
+<img src="https://user-images.githubusercontent.com/86684667/231340028-c6261b3d-5bd6-4aed-a9d4-4784577250d8.png" width = 90% />
+<p>
+
 ## Setup
 
 ### Install [Neovim 0.9](https://github.com/neovim/neovim/releases/tag/v0.9.0)
