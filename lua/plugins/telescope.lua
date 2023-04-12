@@ -1,5 +1,5 @@
 return {
-  'nvim-telescope/telescope.nvim', version = '0.1.1',
+  'nvim-telescope/telescope.nvim',
   dependencies = { 'nvim-lua/plenary.nvim' },
   config = function ()
     -- Using protected call
