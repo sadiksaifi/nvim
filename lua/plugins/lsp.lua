@@ -75,7 +75,6 @@ return {
       omit = { "<Tab>", "S<Tab>" },
     })
 
-
     lsp.configure('lua_ls', {
       capabilities = capabilities,
       on_attach = on_attach,
@@ -102,6 +101,11 @@ return {
     require("luasnip/loaders/from_vscode").lazy_load()
 
     -- Setting up cmp
+    local check_backspace = function()
+      local col = vim.fn.col "." - 1
+      return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+    end
+
     cmp.setup({
       snippet = {
         expand = function(args)
