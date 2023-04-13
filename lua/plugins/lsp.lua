@@ -98,7 +98,9 @@ return {
     lsp.setup()
 
     -- Snippets
-    require("luasnip/loaders/from_vscode").lazy_load()
+    require("luasnip.loaders.from_vscode").lazy_load({
+      paths = { "./snippets" },
+    })
 
     -- Setting up cmp
     local check_backspace = function()
