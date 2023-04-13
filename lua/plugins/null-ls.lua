@@ -25,9 +25,8 @@ return {
       ensure_installed = {
         "prettier",
         "stylua",
-        "eslint",
       },
-      automatic_installation = false,
+      automatic_installation = true,
     })
 
     -- Setting up null ls

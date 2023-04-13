@@ -27,7 +27,7 @@ return {
         background_nc = '_experimental_nc',
         panel = 'surface',
         panel_nc = 'base',
-        border = 'highlight_med',
+        border = 'pine',
         comment = 'muted',
         link = 'iris',
         punctuation = 'subtle',

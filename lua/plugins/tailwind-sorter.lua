@@ -10,7 +10,7 @@ return {
     end
 
     tailwind_sorter.setup({
-      on_save_enabled = true,
+      on_save_enabled = false,
       on_save_pattern = {
         "*.html",
         "*.js",

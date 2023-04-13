@@ -57,6 +57,7 @@ return {
       "cssls",
       "html",
       "tsserver",
+      "eslint",
       "bashls",
       "jsonls",
       "tailwindcss",
