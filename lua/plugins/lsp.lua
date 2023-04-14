@@ -14,6 +14,7 @@ return {
     -- Autocompletion
     { "hrsh7th/nvim-cmp" },
     { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/cmp-nvim-lua" },
     { "L3MON4D3/LuaSnip" },
     { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-path" },
@@ -60,7 +61,7 @@ return {
       "eslint",
       "bashls",
       "jsonls",
-      "tailwindcss",
+      -- "tailwindcss", -- disabling tailwind lsp for now as it's janky
     })
 
     lsp.set_sign_icons({
