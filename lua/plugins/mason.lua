@@ -4,6 +4,9 @@ return {
 		"williamboman/mason-lspconfig.nvim",
     lazy = true,
 	},
+  build = function()
+    pcall(vim.cmd, "MasonUpdate") -- TODO: disable lua_ls warning
+  end,
 	cmd = "Mason",
 	event = "BufReadPre",
 	config = function()
