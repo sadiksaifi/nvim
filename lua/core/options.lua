@@ -34,7 +34,6 @@ vim.opt.wrap = false                                   -- display lines as one l
 vim.opt.scrolloff = 8                                  -- minimal number of screen lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8                              -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
 vim.opt.guifont = "monospace:h17"                      -- the font used in graphical neovim applications
-vim.opt.fillchars.eob=" "                              -- show empty lines at the end of a buffer as ` ` {default `~`}
 vim.opt.shortmess:append "c"                           -- hide all the completion messages, e.g. "-- XXX completion (YYY)", "match 1 of 2", "The only match", "Pattern not found"
 vim.opt.whichwrap:append("<,>,[,],h,l")                -- keys allowed to move to the previous/next line when the beginning/end of line is reached
 vim.opt.iskeyword:append("-")                          -- treats words with `-` as single words
@@ -46,3 +45,9 @@ vim.opt.wildmenu=true                                  -- completion of commands
 vim.opt.wildignorecase=true                            -- case insensitive completion
 vim.opt.wildmode = "longest,full,full"                 -- how the completion is done
 vim.opt.wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
+vim.opt.fillchars = {
+    eob = " ", -- set end-of-buffer character to a space
+    fold = " ", -- set fold character to a space
+    diff = " ", -- set diff character to a space
+    msgsep = "‾", -- set message separator character to a horizontal bar
+}
