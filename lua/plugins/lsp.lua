@@ -1,193 +1,123 @@
 return {
-  "VonHeikemen/lsp-zero.nvim",
-  dependencies = {
-    -- LSP Support
-    { "neovim/nvim-lspconfig" },
-    {
-      "williamboman/mason.nvim",
-      build = function()
-        pcall(vim.cmd, "MasonUpdate")
-      end,
-    },
-    { "williamboman/mason-lspconfig.nvim" },
+	"neovim/nvim-lspconfig",
+	dependencies = {
+		"hrsh7th/cmp-nvim-lsp",
+    "jose-elias-alvarez/typescript.nvim",
+	},
+	config = function()
+		-- Using protected call
+		local lsp_ok, lspconfig = pcall(require, "lspconfig")
+		if not lsp_ok then
+			return
+		end
+		local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+		if not cmp_nvim_lsp_ok then
+			return
+		end
+		local typescript_ok, typescript = pcall(require, "typescript")
+		if not typescript_ok then
+			return
+		end
 
-    -- Autocompletion
-    { "hrsh7th/nvim-cmp" },
-    { "hrsh7th/cmp-nvim-lsp" },
-    { "hrsh7th/cmp-nvim-lua" },
-    { "L3MON4D3/LuaSnip" },
-    { "hrsh7th/cmp-buffer" },
-    { "hrsh7th/cmp-path" },
-    { "saadparwaiz1/cmp_luasnip" },
-  },
-  config = function()
-    -- Using protected call
-    local lsp_ok, lsp = pcall(require, "lsp-zero")
-    if not lsp_ok then
-      return
-    end
-    local cmp_ok, cmp = pcall(require, "cmp")
-    if not cmp_ok then
-      return
-    end
-    local snip_status_ok, luasnip = pcall(require, "luasnip")
-    if not snip_status_ok then
-      return
-    end
+		-- Setting up icons for diagnostics
+		local sign = function(args)
+			vim.fn.sign_define(args.hl, {
+				texthl = args.hl,
+				text = args.text,
+				numhl = "",
+			})
+		end
+		sign({ name = "error", hl = "DiagnosticSignError", text = "✘" })
+		sign({ name = "warn", hl = "DiagnosticSignWarn", text = "▲" })
+		sign({ name = "hint", hl = "DiagnosticSignHint", text = "" })
+		sign({ name = "info", hl = "DiagnosticSignInfo", text = "" })
 
-    -- Setting up lsp
-    lsp.preset({
-      manage_nvim_cmp = {
-        set_sources = "recommended",
+		-- Setting up capabilities
+		local capabilities = cmp_nvim_lsp.default_capabilities()
+
+		-- Setting up on_attach
+		local on_attach = function(client, bufnr)
+			local opts = { silent = true, buffer = bufnr }
+
+      -- Setting keymaps for lsp
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+			vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+			vim.keymap.set("n", "gI", vim.lsp.buf.implementation, opts)
+			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+			vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
+			vim.keymap.set("n", "g]", vim.diagnostic.goto_next, opts)
+			vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, opts)
+			vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts)
+			vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
+			vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
+			vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, opts)
+			vim.keymap.set("n", "<leader>li", vim.cmd.LspInfo, opts)
+
+      -- Typescript specific settings
+      if client.name == "tsserver" then
+        client.server_capabilities.documentFormattingProvider = false
+        vim.keymap.set("n", "<leader>lR", vim.cmd.TypescriptRenameFile, opts)
+      end
+		end
+
+		-- Setting up lua server
+		lspconfig.lua_ls.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			settings = {
+				Lua = {
+					diagnostics = {
+						globals = { "vim" },
+					},
+					workspace = {
+						library = {
+							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+							[vim.fn.stdpath("config") .. "/lua"] = true,
+						},
+					},
+				},
+			},
+		})
+
+		-- Setting up ts server
+    typescript.setup({
+      server = {
+        on_attach = on_attach,
+        capabilities = capabilities,
       },
     })
 
-    lsp.on_attach(function(client, bufnr)
-      lsp.default_keymaps({ buffer = bufnr })
-      local bind = vim.keymap.set
+		-- Setting up html server
+		lspconfig.html.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+		})
 
-      -- Setting keymaps
-      bind("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-      bind("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-      bind("n", "<leader>li", "<cmd>LspInfo<cr>", opts)
-      bind("n", "<leader>lI", "<cmd>Mason<cr>", opts)
-    end)
-
-    lsp.ensure_installed({
-      "lua_ls",
-      "cssls",
-      "html",
-      "tsserver",
-      "eslint",
-      "bashls",
-      "jsonls",
-      -- "tailwindcss", -- disabling tailwind lsp for now as it's janky
-    })
-
-    lsp.set_sign_icons({
-      error = "✘",
-      warn = "▲",
-      hint = "⚑",
-      info = "»",
-    })
-
-    -- Disable some default keymaps
-    lsp.default_keymaps({
-      buffer = bufnr,
-      omit = { "<Tab>", "S<Tab>" },
-    })
-
-    lsp.configure('lua_ls', {
-      capabilities = capabilities,
+    -- Setting up css server
+    lspconfig.cssls.setup({
       on_attach = on_attach,
-      settings = { -- custom settings for lua
-        Lua = {
-          -- make the language server recognize "vim" global
-          diagnostics = {
-            globals = { "vim" },
-          },
-          workspace = {
-            -- make language server aware of runtime files
-            library = {
-              [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-              [vim.fn.stdpath("config") .. "/lua"] = true,
-            },
-          },
-        },
-      },
+      capabilities = capabilities,
     })
 
-    lsp.setup()
-
-    -- Snippets
-    require("luasnip.loaders.from_vscode").lazy_load({
-      paths = { "./snippets" },
+    -- Setting up eslint server
+    lspconfig.eslint.setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
     })
 
-    -- Setting up cmp
-    local check_backspace = function()
-      local col = vim.fn.col "." - 1
-      return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-    end
-
-    cmp.setup({
-      snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body) -- `luasnip`
-        end,
-      },
-      formatting = {
-        fields = { "abbr", "menu", "kind" },
-        format = function(entry, item)
-          local menu_icon = {
-            nvim_lsp = "λ",
-            luasnip = "⋗",
-            buffer = "Ω",
-            path = "🖫",
-            nvim_lua = "Π",
-          }
-
-          item.menu = menu_icon[entry.source.name]
-          return item
-        end,
-      },
-
-      mapping = cmp.mapping.preset.insert {
-        ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-        ["<C-e>"] = cmp.mapping {
-          i = cmp.mapping.abort(),
-          c = cmp.mapping.close(),
-        },
-        ["<CR>"] = cmp.mapping.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = false,
-        }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expandable() then
-            luasnip.expand()
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif check_backspace() then
-            fallback()
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-      },
-
-      sources = {
-        { name = "nvim_lsp" },
-        { name = "nvim_lua" },
-        { name = "luasnip" },
-        { name = "buffer" },
-        { name = "path" },
-      },
-      window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-      },
-      experimental = {
-        ghost_text = false, --disable if using copilot ghost text
-      },
+    -- Setting up json server
+    lspconfig.jsonls.setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
     })
-  end,
+
+    -- Setting up bash server
+    lspconfig.bashls.setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
+
+	end,
 }
