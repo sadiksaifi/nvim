@@ -19,18 +19,12 @@ return {
 			return
 		end
 
-		-- Setting up icons for diagnostics
-		local sign = function(args)
-			vim.fn.sign_define(args.hl, {
-				texthl = args.hl,
-				text = args.text,
-				numhl = "",
-			})
-		end
-		sign({ name = "error", hl = "DiagnosticSignError", text = "✘" })
-		sign({ name = "warn", hl = "DiagnosticSignWarn", text = "▲" })
-		sign({ name = "hint", hl = "DiagnosticSignHint", text = "" })
-		sign({ name = "info", hl = "DiagnosticSignInfo", text = "" })
+    -- Setting up icons for diagnostics
+    local signs = { Error = "✘ ", Warn = "▲ ", Hint = " ", Info = " " }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
 
 		-- Setting up capabilities
 		local capabilities = cmp_nvim_lsp.default_capabilities()
