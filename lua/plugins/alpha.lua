@@ -29,7 +29,7 @@ return {
       dashboard.button("q", " " .. " Quit", ":qa<CR>"),
     }
     local function footer()
-      return "sadiksaifi.dev"
+      return "www.sadiksaifi.dev"
     end
 
     dashboard.section.footer.val = footer()

@@ -36,10 +36,11 @@ return {
       -- Setting keymaps for lsp
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+			-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+			vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 			vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
 			vim.keymap.set("n", "gI", vim.lsp.buf.implementation, opts)
-			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+			vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
 			vim.keymap.set("n", "dl", vim.diagnostic.open_float, opts)
 			vim.keymap.set("n", "d]", vim.diagnostic.goto_next, opts)
 			vim.keymap.set("n", "d[", vim.diagnostic.goto_prev, opts)
