@@ -32,11 +32,6 @@ If you would like to make sure Neovim only updates when you want it to than I re
 
 **NOTE** Verify the required [build prerequisites](https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites) for your system.
 
-## Dependencies
-- Node > v18.x
-- Deno
-- Gcc
-
 ```sh
 git clone https://github.com/neovim/neovim.git
 cd neovim
@@ -44,6 +39,11 @@ git checkout release-0.9
 make CMAKE_BUILD_TYPE=Release
 sudo make install
 ```
+
+## Dependencies
+- Node > v18.x
+- Deno
+- Gcc
 
 ## Install the config
 
