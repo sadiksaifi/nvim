@@ -40,10 +40,10 @@ make CMAKE_BUILD_TYPE=Release
 sudo make install
 ```
 
-## Dependencies
-- Node > v18.x
-- Deno
-- Gcc
+## Config dependencies
+- node
+- npm
+- gcc
 
 ## Install the config
 
