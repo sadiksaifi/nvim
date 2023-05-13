@@ -2,7 +2,7 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
-    "jose-elias-alvarez/typescript.nvim",
+		"jose-elias-alvarez/typescript.nvim",
 	},
 	config = function()
 		-- Using protected call
@@ -19,12 +19,12 @@ return {
 			return
 		end
 
-    -- Setting up icons for diagnostics
-    local signs = { Error = "✘ ", Warn = "▲ ", Hint = " ", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
+		-- Setting up icons for diagnostics
+		local signs = { Error = "✘ ", Warn = "▲ ", Hint = " ", Info = " " }
+		for type, icon in pairs(signs) do
+			local hl = "DiagnosticSign" .. type
+			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+		end
 
 		-- Setting up capabilities
 		local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -33,7 +33,7 @@ return {
 		local on_attach = function(client, bufnr)
 			local opts = { silent = true, buffer = bufnr }
 
-      -- Setting keymaps for lsp
+			-- Setting keymaps for lsp
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 			-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -50,11 +50,19 @@ return {
 			vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, opts)
 			vim.keymap.set("n", "<leader>li", vim.cmd.LspInfo, opts)
 
-      -- Typescript specific settings
-      if client.name == "tsserver" then
-        client.server_capabilities.documentFormattingProvider = false
-        vim.keymap.set("n", "<leader>lR", vim.cmd.TypescriptRenameFile, opts)
-      end
+			-- Typescript specific settings
+			if client.name == "tsserver" then
+				client.server_capabilities.documentFormattingProvider = false
+				vim.keymap.set("n", "<leader>lR", vim.cmd.TypescriptRenameFile, opts)
+			end
+		end
+
+		-- Setting up servers
+		local servers = { "html", "cssls", "eslint", "jsonls", "bashls" }
+		for _, server in ipairs(servers) do
+			if lspconfig[server] then
+				lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
+			end
 		end
 
 		-- Setting up lua server
@@ -69,7 +77,6 @@ return {
 					workspace = {
 						library = {
 							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-							[vim.fn.stdpath("config") .. "/lua"] = true,
 						},
 					},
 				},
@@ -77,42 +84,11 @@ return {
 		})
 
 		-- Setting up ts server
-    typescript.setup({
-      server = {
-        on_attach = on_attach,
-        capabilities = capabilities,
-      },
-    })
-
-		-- Setting up html server
-		lspconfig.html.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
+		typescript.setup({
+			server = {
+				on_attach = on_attach,
+				capabilities = capabilities,
+			},
 		})
-
-    -- Setting up css server
-    lspconfig.cssls.setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-    })
-
-    -- Setting up eslint server
-    lspconfig.eslint.setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-    })
-
-    -- Setting up json server
-    lspconfig.jsonls.setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-    })
-
-    -- Setting up bash server
-    lspconfig.bashls.setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-    })
-
 	end,
 }
