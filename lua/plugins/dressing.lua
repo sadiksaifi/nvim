@@ -1,7 +1,11 @@
 return {
-  'stevearc/dressing.nvim',
+  "stevearc/dressing.nvim",
   config = function()
-    require('dressing').setup({
+    local status_ok, dressing = pcall(require, "dressing")
+    if not status_ok then
+      return
+    end
+    dressing.setup({
       input = {
         enabled = true,
         default_prompt = "Input:",
@@ -137,5 +141,5 @@ return {
         get_config = nil,
       },
     })
-  end
+  end,
 }
