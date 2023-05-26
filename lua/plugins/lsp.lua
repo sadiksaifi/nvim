@@ -58,7 +58,7 @@ return {
 		end
 
 		-- Setting up servers
-		local servers = { "html", "cssls", "eslint", "jsonls", "bashls" }
+		local servers = { "html", "cssls", "eslint", "jsonls", "bashls", "tailwindcss" }
 		for _, server in ipairs(servers) do
 			if lspconfig[server] then
 				lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })

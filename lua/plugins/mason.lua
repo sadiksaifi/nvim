@@ -46,6 +46,7 @@ return {
 				"eslint",
 				"bashls",
 				"jsonls",
+        "tailwindcss"
 			},
 			automatic_installation = true,
 		})

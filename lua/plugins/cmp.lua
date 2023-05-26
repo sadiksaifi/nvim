@@ -1,4 +1,4 @@
-return{
+return {
   'hrsh7th/nvim-cmp',
   dependencies = {
     { "hrsh7th/cmp-nvim-lsp" },
@@ -11,6 +11,15 @@ return{
     { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-path" },
     { "saadparwaiz1/cmp_luasnip" },
+    {
+      "roobert/tailwindcss-colorizer-cmp.nvim",
+      -- optionally, override the default options:
+      config = function()
+        require("tailwindcss-colorizer-cmp").setup({
+          color_square_width = 2,
+        })
+      end
+    }
   },
   event = {
     "InsertEnter",
@@ -39,17 +48,17 @@ return{
         documentation = cmp.config.window.bordered(),
       },
       formatting = {
-        fields = { "abbr", "menu", "kind" },
+        fields = { "menu", "abbr", "kind" },
         format = function(entry, item)
           local menu_icon = {
-            nvim_lsp = "λ",
-            luasnip = "⋗",
-            buffer = "Ω",
-            path = "🖫",
-            nvim_lua = "Π",
+            nvim_lsp = " ",
+            luasnip = "⋗ ",
+            buffer = " ",
+            path = " ",
+            nvim_lua = " ",
           }
           item.menu = menu_icon[entry.source.name]
-          return item
+          return require("tailwindcss-colorizer-cmp").formatter(entry, item)
         end,
       },
       mapping = cmp.mapping.preset.insert({
@@ -68,7 +77,11 @@ return{
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
-      })
+      }),
+      experimental = {
+        ghost_text = false,
+        native_menu = false,
+      },
     })
   end
 }
