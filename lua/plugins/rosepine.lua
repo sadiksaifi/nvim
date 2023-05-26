@@ -21,7 +21,6 @@ return {
       disable_float_background = true,
       disable_italics = false,
 
-      --- @usage string hex value or named color from rosepinetheme.com/palette
       groups = {
         background = 'base',
         background_nc = '_experimental_nc',
@@ -45,16 +44,9 @@ return {
           h5 = 'pine',
           h6 = 'foam',
         }
-        -- or set all headings at once
-        -- headings = 'subtle'
       },
-
-      -- Change specific vim highlight groups
-      -- https://github.com/rose-pine/neovim/wiki/Recipes
       highlight_groups = {
         ColorColumn = { bg = 'foam', blend = 10 },
-
-        -- Blend colours against the "base" background
         CursorLine = { bg = 'foam', blend = 10 },
         StatusLine = { fg = 'iris', bg = 'pine' },
       }

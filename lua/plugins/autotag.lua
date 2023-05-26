@@ -1,5 +1,6 @@
 return {
   "windwp/nvim-ts-autotag",
+	event = "InsertEnter",
   config = function ()
     -- Using protected call
     local status_ok, autotag = pcall(require, "nvim-ts-autotag")

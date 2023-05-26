@@ -2,10 +2,16 @@ return {
   'hrsh7th/nvim-cmp',
   dependencies = {
     { "hrsh7th/cmp-nvim-lsp" },
-    { "hrsh7th/cmp-nvim-lua" },
+    {
+      "hrsh7th/cmp-nvim-lua",
+      event = {
+        "InsertEnter",
+        "CmdlineEnter",
+      },
+    },
     {
       "L3MON4D3/LuaSnip",
-      event = "InsertCharPre",
+      event = "InsertEnter",
       dependencies = "rafamadriz/friendly-snippets"
     },
     { "hrsh7th/cmp-buffer" },
@@ -52,10 +58,10 @@ return {
         format = function(entry, item)
           local menu_icon = {
             nvim_lsp = " ",
+            nvim_lua = " ",
             luasnip = "⋗ ",
             buffer = " ",
             path = " ",
-            nvim_lua = " ",
           }
           item.menu = menu_icon[entry.source.name]
           return require("tailwindcss-colorizer-cmp").formatter(entry, item)

@@ -1,5 +1,6 @@
 return {
   "stevearc/dressing.nvim",
+  event = "BufRead",
   config = function()
     local status_ok, dressing = pcall(require, "dressing")
     if not status_ok then
