@@ -63,41 +63,53 @@ Run `nvim` and wait for the plugins to be installed
 
 ```sh
 nvim
-  ├── after
-  │   └── ftplugin
-  │       ├── c.lua
-  │       ├── cpp.lua
-  │       ├── json.lua
-  │       └── tex.lua
-  ├── init.lua
-  ├── lazy-lock.json
-  ├── lua
-  │   ├── core
-  │   │   ├── autocommands.lua
-  │   │   ├── keymaps.lua
-  │   │   └── options.lua
-  │   ├── lazy-setup.lua
-  │   └── plugins
-  │       ├── alpha.lua
-  │       ├── autopairs.lua
-  │       ├── bufferline.lua
-  │       ├── comment.lua
-  │       ├── completion.lua
-  │       ├── gitsigns.lua
-  │       ├── indentline.lua
-  │       ├── lsp.lua
-  │       ├── lualine.lua
-  │       ├── null-ls.lua
-  │       ├── nvimtree.lua
-  │       ├── peek.lua
-  │       ├── rosepine.lua
-  │       ├── snippets.lua
-  │       ├── telescope.lua
-  │       ├── toggleterm.lua
-  │       ├── treesitter.lua
-  │       └── ts-autotag.lua
-  └── plugin
-      └── netrw.lua
+ ├── after
+ │   └── ftplugin
+ │       ├── c.lua
+ │       ├── cpp.lua
+ │       ├── json.lua
+ │       └── tex.lua
+ ├── init.lua
+ ├── lua
+ │   ├── core
+ │   │   ├── autocommands.lua
+ │   │   ├── keymaps.lua
+ │   │   └── options.lua
+ │   ├── lazy-setup.lua
+ │   ├── plugins
+ │   │   ├── alpha.lua
+ │   │   ├── autopairs.lua
+ │   │   ├── autotag.lua
+ │   │   ├── bufferline.lua
+ │   │   ├── cmp.lua
+ │   │   ├── colorizer.lua
+ │   │   ├── comment.lua
+ │   │   ├── copilot.lua
+ │   │   ├── devicons.lua
+ │   │   ├── dressing.lua
+ │   │   ├── fugitive.lua
+ │   │   ├── gitsigns.lua
+ │   │   ├── indentline.lua
+ │   │   ├── lsp.lua
+ │   │   ├── lualine.lua
+ │   │   ├── markdown-preview.lua
+ │   │   ├── mason.lua
+ │   │   ├── null-ls.lua
+ │   │   ├── nvimtree.lua
+ │   │   ├── rosepine.lua
+ │   │   ├── snippets.lua
+ │   │   ├── tailwind-sorter.lua
+ │   │   ├── telescope.lua
+ │   │   ├── toggleterm.lua
+ │   │   └── treesitter.lua
+ │   ├── settings
+ │   │   ├── lua_ls.lua
+ │   │   └── pyright.lua
+ │   └── utils
+ │       └── init.lua
+ ├── plugin
+ │   └── netrw.lua
+ └── README.md
 ```
 
 ## Get healthy
@@ -180,19 +192,21 @@ Note: Builtin LSP doesn't contain all lsps from [nvim-lspconfig](https://github.
 
 If you want to install any from there, for example terraform_lsp(which adds more functionality than terraformls, like complete resource listing),
 
-1. You can add the lsp name in [mason lsp block](https://github.com/sadikeey/nvim/blob/lua/plugins/lsp.lua)
+1. You can add the any lsp name in [servers](https://github.com/sadikeey/nvim/blob/lua/utils/init.lua) block.
 
 ```lua
--- lua/plugins/lsp.lua
-    lsp.ensure_installed({
-      "lua_ls",
-      "cssls",
-      "html",
-      "tsserver",
-      "bashls",
-      "jsonls",
-      "tailwindcss",
-    })
+-- lua/utils/init.lua
+M.servers = {
+  "lua_ls",
+  "cssls",
+  "html",
+  "tsserver",
+  "eslint",
+  "bashls",
+  "jsonls",
+  "yamlls",
+  "tailwindcss",
+}
 ```
 
 2. Manually install the binary of the lsp and put it in your path by downloading the binary or through your package manager. For terraform_lsp [example](https://github.com/juliosueiras/terraform-lsp/releases)
@@ -202,15 +216,14 @@ If you want to install any from there, for example terraform_lsp(which adds more
 
 Make sure the formatter or linter is installed and add it to this setup function: [null-ls](https://github.com/sadikeey/nvim/blob/lua/plugins/null-ls.lua)
 
-1. You can add the lsp name in [null-ls block](https://github.com/sadikeey/nvim/blob/lua/plugins/null-ls.lua)
+1. You can add the lsp name in [linters](https://github.com/sadikeey/nvim/blob/lua/utils/init.lua) block.
 
 ```lua
--- lua/plugins/null-ls.lua
-  ensure_installed = {
-    "prettier",
-    "stylua",
-    "eslint_d",
-  },
+-- lua/utils/init.lua
+M.linters = {
+  "prettier",
+  "stylua",
+}
 ```
 
 **NOTE** Some are already setup as examples, remove them if you want
