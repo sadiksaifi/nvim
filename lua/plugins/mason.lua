@@ -27,16 +27,7 @@ return {
 			"williamboman/mason-lspconfig.nvim",
       event = "BufWinEnter",
 			opts = {
-				ensure_installed = {
-					"lua_ls",
-					"cssls",
-					"html",
-					"tsserver",
-					"eslint",
-					"bashls",
-					"jsonls",
-					"tailwindcss",
-				},
+        ensure_installed = require("utils").servers,
 				automatic_installation = true,
 			},
 		},
@@ -46,10 +37,7 @@ return {
       after = "Mason",
 			opts = {
 				automatic_setup = true,
-				ensure_installed = {
-					"prettier",
-					"stylua",
-				},
+				ensure_installed = require("utils").linters,
 				automatic_installation = true,
 			},
 		},

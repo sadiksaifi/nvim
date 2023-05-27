@@ -9,30 +9,7 @@ return {
     end
 
     treesitter_config.setup({
-      ensure_installed = {
-        "lua",
-        "vim",
-        "markdown",
-        "markdown_inline",
-        "latex",
-        "bash",
-        "python",
-        "cpp",
-        "c",
-        "java",
-        "javascript",
-        "typescript",
-        "tsx",
-        "html",
-        "css",
-        "json",
-        "yaml",
-        "toml",
-        "regex",
-        "go",
-        "rust",
-        "dockerfile",
-      },
+      ensure_installed = require("utils").parsers,
       sync_install = false,
 
       highlight = {
