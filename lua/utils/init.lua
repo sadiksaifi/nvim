@@ -10,6 +10,7 @@ M.servers = {
   "jsonls",
   "yamlls",
   "tailwindcss",
+  "gopls",
 }
 
 M.linters = {

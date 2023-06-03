@@ -34,19 +34,26 @@ return {
       vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
       vim.keymap.set("n", "gI", vim.lsp.buf.implementation, opts)
       vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-      vim.keymap.set("n", "dl", vim.diagnostic.open_float, opts)
-      vim.keymap.set("n", "d]", vim.diagnostic.goto_next, opts)
-      vim.keymap.set("n", "d[", vim.diagnostic.goto_prev, opts)
+      vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
       vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts)
       vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
       vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
-      vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, opts)
       vim.keymap.set("n", "<leader>li", vim.cmd.LspInfo, opts)
 
       -- Typescript specific settings
       if client.name == "tsserver" then
         client.server_capabilities.documentFormattingProvider = false
         vim.keymap.set("n", "<leader>lR", vim.cmd.TypescriptRenameFile, opts)
+        vim.keymap.set("n", "<leader>oi", vim.cmd.TypescriptOrganizeImports, opts)
+        vim.keymap.set("n", "<leader>ai", vim.cmd.TypescriptAddImport, opts)
+        vim.keymap.set("n", "<leader>ru", vim.cmd.TypescriptRemoveUnused, opts)
+      end
+
+      -- Eslint specific settings
+      if client.name == "eslint" then
+        vim.keymap.set("n", "<leader>le", vim.cmd.EslintFixAll, opts)
       end
     end
 
