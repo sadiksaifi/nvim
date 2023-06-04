@@ -16,11 +16,9 @@
 
 Blazingly Fast IDE for Web Development using Neovim is a powerful and efficient integrated development environment designed for web developers.
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/86684667/231339807-42188b62-4c23-44fb-8a3e-6ce0eb7ac89c.png" width = 90% />
-<img src="https://user-images.githubusercontent.com/86684667/231339935-206be3f3-d262-4f81-b455-60c5f4837d1d.png" width = 90% />
-<img src="https://user-images.githubusercontent.com/86684667/231340028-c6261b3d-5bd6-4aed-a9d4-4784577250d8.png" width = 90% />
-<p>
+<div id="gif-container" style="display: flex; justify-content: center; align-items: center;">
+  <img src="https://data.sadiksaifi.dev/Screenshots/Neovim.gif" loop autoplay>
+</div>
 
 ## Setup
 
@@ -40,10 +38,13 @@ make CMAKE_BUILD_TYPE=Release
 sudo make install
 ```
 
-## Config dependencies
-- node
-- npm
+## Config Dependencies
+- node >= 18
+- npm >= 9
 - gcc
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [fd](https://github.com/sharkdp/fd)
+- [Nerd Fonts](https://www.nerdfonts.com/) - An easy tool to install ([getnf](https://github.com/ronniedroid/getnf))
 
 ## Install the config
 
@@ -111,66 +112,6 @@ nvim
  │   └── netrw.lua
  └── README.md
 ```
-
-## Get healthy
-
-Open `nvim` and enter the following:
-
-```
-:checkhealth
-```
-
-You'll probably notice you don't have support for copy/paste also that python and node haven't been setup
-
-So let's fix that
-
-First we'll fix copy/paste
-
-- On mac `pbcopy` should be builtin
-
-- On Arch Linux
-
-  ```sh
-  sudo pacman -Sy xsel # for X11
-  sudo pacman -Sy wl-clipboard # for wayland
-  ```
-
-If you want pyton and node support you can also install respective packages.
-
-**NOTE** make sure you have [node](https://nodejs.org/en/) and [python](https://www.python.org/) installed.
-
-
-- Neovim python support
-
-  ```sh
-  pip install pynvim
-  ```
-
-- Neovim node support
-
-  ```sh
-  npm i -g neovim
-  ```
-
-We will also need `ripgrep` & `fd` for **`Telescope`** to work:
-
-- Arch Linux
-  ```sh
-  sudo pacman install ripgrep fd
-  ```
-
-- Mac
-  ```sh
-  brew install ripgrep fd
-  ```
-
----
-
-## Fonts
-
-I recommend using the following repo to get a "Nerd Font" (Font that supports icons)
-
-[getnf](https://github.com/ronniedroid/getnf)
 
 ## Configuration
 
