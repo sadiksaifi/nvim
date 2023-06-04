@@ -1,12 +1,13 @@
 return {
-  "windwp/nvim-ts-autotag",
-	event = "InsertEnter",
-  config = function ()
-    -- Using protected call
-    local status_ok, autotag = pcall(require, "nvim-ts-autotag")
-    if not status_ok then
-      return
-    end
-    autotag.setup()
-  end
+	"windwp/nvim-ts-autotag",
+	ft = {
+		"html",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"svelte",
+		"vue",
+	},
+	opts = {},
 }
