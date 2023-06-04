@@ -6,6 +6,14 @@ return {
 			"nvim-lua/plenary.nvim",
 			lazy = true,
 		},
+		{
+			"jay-babu/mason-null-ls.nvim",
+			opts = {
+				automatic_setup = true,
+				ensure_installed = require("utils").linters,
+				automatic_installation = true,
+			},
+		},
 	},
 	keys = {
 		{
@@ -13,6 +21,7 @@ return {
 			"<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
 			desc = "Format",
 		},
+		{ "<leader>ln", "<cmd>NullLsInfo<cr>", desc = "NullLsInfo" },
 	},
 	config = function()
 		-- Using protected call
@@ -26,8 +35,11 @@ return {
 		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
 		local diagnostics = null_ls.builtins.diagnostics
 
+		-- Setting up border for NullLsInfo like lspconfig ui
+
 		-- Setting up null ls
 		null_ls.setup({
+      border = "rounded",
 			debug = false,
 			sources = {
 				formatting.prettier.with({

@@ -11,6 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
+vim.keymap.set("n", "<leader>L", "<cmd>Lazy<CR>", { noremap = true, silent = true })
 
 require("lazy").setup("plugins", {
   root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
