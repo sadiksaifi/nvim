@@ -1,6 +1,6 @@
 return {
 	"nvim-tree/nvim-web-devicons",
-	event = "VeryLazy",
+	event = "VimEnter",
 	opts = {
 		override = {
 			zsh = {

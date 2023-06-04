@@ -1,6 +1,6 @@
 return {
   "akinsho/bufferline.nvim",
-  event = { "BufRead", "BufWinEnter", "BufNewFile" },
+  event = "BufRead",
   dependencies = {
     {
       "famiu/bufdelete.nvim",

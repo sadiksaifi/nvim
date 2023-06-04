@@ -1,6 +1,6 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	event = { "VimEnter", "InsertEnter", "BufReadPre", "BufAdd", "BufNew", "BufReadPost" },
+	event = "BufReadPre",
 	config = function()
 		-- Using protected call
 		local status_ok, lualine = pcall(require, "lualine")
