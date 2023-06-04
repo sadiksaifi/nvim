@@ -2,17 +2,7 @@ return {
 	"laytan/tailwind-sorter.nvim",
 	dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-lua/plenary.nvim" },
 	build = "cd formatter && npm i && npm run build",
-	ft = {
-		"html",
-		"javascript",
-		"javascriptreact",
-		"typescript",
-		"typescriptreact",
-		"twig",
-		"handlebars",
-		"php",
-		"heex",
-	},
+  cmd = "TailwindSort",
 	opts = {
 		on_save_enabled = false,
 		on_save_pattern = {

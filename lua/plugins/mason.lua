@@ -3,11 +3,7 @@ return {
 	keys = {
 		{ "<leader>lI", "<cmd>Mason<CR>", desc = "Opens Mason" },
 	},
-	-- build = function()
-	-- 	pcall(vim.cmd, "MasonUpdate") -- TODO: disable lua_ls warning
-	-- end,
 	cmd = "Mason",
-  lazy = true,
 	opts = {
 		ui = {
 			border = "rounded",
@@ -25,7 +21,7 @@ return {
 	dependencies = {
 		{
 			"williamboman/mason-lspconfig.nvim",
-      event = "BufWinEnter",
+      event = "BufReadPre",
 			opts = {
         ensure_installed = require("utils").servers,
 				automatic_installation = true,
@@ -33,8 +29,7 @@ return {
 		},
 		{
 			"jay-babu/mason-null-ls.nvim",
-      event = "VeryLazy",
-      after = "Mason",
+      after = "nvim-lspconfig",
 			opts = {
 				automatic_setup = true,
 				ensure_installed = require("utils").linters,
