@@ -1,6 +1,9 @@
 return {
   "akinsho/toggleterm.nvim",
-  event = "BufReadPre",
+  keys = {
+    { "<C-\\>", "<cmd>ToggleTerm<CR>", desc="Toggle terminal" },
+    { "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", desc="Toggle lazygit" },
+  },
   config = function()
     -- Using protected call
     local status_ok, toggleterm = pcall(require, "toggleterm")
