@@ -11,6 +11,7 @@ M.servers = {
   "yamlls",
   "tailwindcss",
   "gopls",
+  "astro"
 }
 
 M.linters = {
