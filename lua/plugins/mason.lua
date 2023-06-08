@@ -8,6 +8,7 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     event = { "BufRead", "BufNewFile" },
+    build = ":MasonUpdate",
     keys = {
       { "<leader>lI", "<cmd>Mason<CR>", desc = "Opens Mason" },
     },
