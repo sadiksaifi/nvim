@@ -1,6 +1,6 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	event = "BufReadPre",
+  event = {"BufRead", "BufNewFile" },
 	config = function()
 		-- Using protected call
 		local status_ok, lualine = pcall(require, "lualine")
