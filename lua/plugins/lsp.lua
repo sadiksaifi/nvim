@@ -1,9 +1,9 @@
 return {
   "neovim/nvim-lspconfig",
-  event = "BufReadPre",
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-nvim-lsp",
   },
+  event = "BufReadPre",
   config = function()
     -- Using protected call
     local lsp_ok, lspconfig = pcall(require, "lspconfig")

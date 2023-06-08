@@ -5,7 +5,6 @@ return {
     {
       "rafamadriz/friendly-snippets",
       event = "InsertCharPre",
-      after = "LuaSnip",
     },
   },
 }

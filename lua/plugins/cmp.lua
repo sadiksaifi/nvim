@@ -1,31 +1,12 @@
 return {
 	"hrsh7th/nvim-cmp",
 	dependencies = {
-		{
-      "hrsh7th/cmp-nvim-lsp",
-      after = "nvim-cmp",
-    },
-		{
-			"hrsh7th/cmp-nvim-lua",
-      after = "nvim-cmp",
-		},
-		{
-			"L3MON4D3/LuaSnip",
-			event = "InsertEnter",
-			dependencies = "rafamadriz/friendly-snippets",
-		},
+		{ "hrsh7th/cmp-nvim-lsp" },
+		{ "hrsh7th/cmp-nvim-lua" },
+    { "hrsh7th/cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-path" },
 		{ "saadparwaiz1/cmp_luasnip" },
-		{
-			"roobert/tailwindcss-colorizer-cmp.nvim",
-			-- optionally, override the default options:
-			config = function()
-				require("tailwindcss-colorizer-cmp").setup({
-					color_square_width = 2,
-				})
-			end,
-		},
 	},
 	event = "InsertEnter",
 	config = function()
@@ -61,7 +42,7 @@ return {
 						path = " ",
 					}
 					item.menu = menu_icon[entry.source.name]
-					return require("tailwindcss-colorizer-cmp").formatter(entry, item)
+          return item
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
