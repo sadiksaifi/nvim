@@ -26,8 +26,8 @@ return {
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 				vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-				vim.keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-				vim.keymap.set("n", "gI", vim.lsp.buf.implementation, opts)
+				vim.keymap.set("n", "gT", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+				vim.keymap.set("n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
 				vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
 				vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
 				vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
@@ -71,10 +71,10 @@ return {
 
 			-- Setting up icons for diagnostics
 			local signs = {
-				{ name = "DiagnosticSignError", text = "" },
-				{ name = "DiagnosticSignWarn", text = "" },
-				{ name = "DiagnosticSignHint", text = "" },
-				{ name = "DiagnosticSignInfo", text = "" },
+				{ name = "DiagnosticSignError", text = "" },
+				{ name = "DiagnosticSignWarn", text = "" },
+				{ name = "DiagnosticSignHint", text = "" },
+				{ name = "DiagnosticSignInfo", text = "󰋽" },
 			}
 			for _, sign in ipairs(signs) do
 				vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
