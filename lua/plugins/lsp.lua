@@ -16,10 +16,10 @@ return {
 				return
 			end
 			-- Setting up capabilities
-			Capabilities = cmp_nvim_lsp.default_capabilities()
+			local capabilities = cmp_nvim_lsp.default_capabilities()
 
 			-- Setting up on_attach
-			On_attach = function(client, bufnr)
+			local on_attach = function(client, bufnr)
 				local opts = { silent = true, buffer = bufnr }
 
 				-- Setting keymaps for lsp
@@ -52,8 +52,8 @@ return {
 			-- Setting up servers
 			for _, server in pairs(require("utils").servers) do
 				Opts = {
-					on_attach = On_attach,
-					capabilities = Capabilities,
+					on_attach = on_attach,
+					capabilities = capabilities,
 				}
 
 				server = vim.split(server, "@")[1]
@@ -107,8 +107,8 @@ return {
 			})
 			-- Setting up lua server
 			lspconfig.lua_ls.setup({
-				on_attach = On_attach,
-				capabilities = Capabilities,
+				on_attach = on_attach,
+				capabilities = capabilities,
 				settings = {
 					Lua = {
 						diagnostics = {

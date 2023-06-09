@@ -9,8 +9,7 @@ return {
   },
   opts = {
     server = {
-      on_attach = On_attach,
-      capabilities = Capabilities,
+      capabilities = require("cmp_nvim_lsp").default_capabilities(),
     },
   },
 }
