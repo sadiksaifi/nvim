@@ -1,13 +1,13 @@
 return {
   "williamboman/mason-lspconfig.nvim",
-  event = { "BufRead", "BufNewFile" },
+  event = { "BufReadPre", "BufNewFile" },
   opts = {
     ensure_installed = require("utils").servers,
     automatic_installation = true,
   },
   dependencies = {
     "williamboman/mason.nvim",
-    event = { "BufRead", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile" },
     build = ":MasonUpdate",
     keys = {
       { "<leader>lI", "<cmd>Mason<CR>", desc = "Opens Mason" },
