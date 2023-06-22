@@ -24,9 +24,9 @@ return {
 
 				-- Setting keymaps for lsp
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+				-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 				vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-				vim.keymap.set("n", "gT", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+				vim.keymap.set("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 				vim.keymap.set("n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
 				vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
 				vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
@@ -69,22 +69,8 @@ return {
 			-- Setting up border for LspInfo
 			require("lspconfig.ui.windows").default_options.border = "rounded"
 
-			-- Setting up icons for diagnostics
-			local signs = {
-				{ name = "DiagnosticSignError", text = "" },
-				{ name = "DiagnosticSignWarn", text = "" },
-				{ name = "DiagnosticSignHint", text = "" },
-				{ name = "DiagnosticSignInfo", text = "󰋽" },
-			}
-			for _, sign in ipairs(signs) do
-				vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-			end
-
 			vim.diagnostic.config({
 				virtual_text = true,
-				signs = {
-					active = signs,
-				},
 				update_in_insert = true,
 				underline = true,
 				severity_sort = true,

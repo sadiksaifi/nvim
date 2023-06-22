@@ -2,10 +2,7 @@ return {
 	"jose-elias-alvarez/null-ls.nvim",
 	event = "BufReadPre",
 	dependencies = {
-		{
-			"nvim-lua/plenary.nvim",
-			lazy = true,
-		},
+    { "nvim-lua/plenary.nvim" },
 		{
 			"jay-babu/mason-null-ls.nvim",
 			opts = {
@@ -30,12 +27,8 @@ return {
 			return
 		end
 
-		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
 		local formatting = null_ls.builtins.formatting
-		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
 		local diagnostics = null_ls.builtins.diagnostics
-
-		-- Setting up border for NullLsInfo like lspconfig ui
 
 		-- Setting up null ls
 		null_ls.setup({
