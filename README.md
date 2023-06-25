@@ -52,7 +52,7 @@ Make sure to remove or move your current `nvim` directory
 
 ```sh
 mv ~/.config/nvim/ ~/.config/nvim-bak/
-git clone https://github.com/sadikeey/nvim.git ~/.config/nvim
+git clone https://github.com/sadikeey/nvim.git ~/.config/nvim --branch release-0.9
 ```
 
 Run `nvim` and wait for the plugins to be installed
