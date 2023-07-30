@@ -4,7 +4,7 @@ return {
   keys = {
     { "<leader>lR", vim.cmd.TypescriptRenameFile, desc="" },
     { "<leader>oi", vim.cmd.TypescriptOrganizeImports, desc="" },
-    { "<leader>ai", vim.cmd.TypescriptAddImport, desc="" },
+    { "<leader>ai", vim.cmd.TypescriptAddMissingImports, desc="" },
     { "<leader>ru", vim.cmd.TypescriptRemoveUnused, desc="" },
   },
   opts = {
