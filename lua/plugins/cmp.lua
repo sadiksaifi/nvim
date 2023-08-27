@@ -3,22 +3,15 @@ return {
 	dependencies = {
 		{ "hrsh7th/cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-nvim-lua" },
-    { "hrsh7th/cmp-nvim-lsp" },
+		{ "hrsh7th/cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-path" },
 		{ "saadparwaiz1/cmp_luasnip" },
 	},
 	event = "InsertEnter",
 	config = function()
-		-- Using protected call
-		local cmp_ok, cmp = pcall(require, "cmp")
-		if not cmp_ok then
-			return
-		end
-		local luasnip_ok, luasnip = pcall(require, "luasnip")
-		if not luasnip_ok then
-			return
-		end
+		local cmp = require("cmp")
+		local luasnip = require("luasnip")
 
 		cmp.setup({
 			snippet = {
@@ -41,7 +34,7 @@ return {
 						path = " ",
 					}
 					item.menu = menu_icon[entry.source.name]
-          return item
+					return item
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
