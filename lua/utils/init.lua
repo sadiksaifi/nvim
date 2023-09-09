@@ -5,7 +5,6 @@ M.servers = {
   "cssls",
   "html",
   "tsserver",
-  "eslint",
   "bashls",
   "jsonls",
   "yamlls",
@@ -13,11 +12,15 @@ M.servers = {
   "gopls",
   "astro",
   "jdtls",
+  "pylsp",
+  "clangd",
+  "eslint"
 }
 
 M.linters = {
   "prettier",
   "stylua",
+  "black",
 }
 
 M.parsers = {
