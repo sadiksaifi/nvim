@@ -44,7 +44,7 @@ return {
       highlight_groups = {
         ColorColumn = { bg = 'foam', blend = 10 },
         CursorLine = { bg = 'foam', blend = 10 },
-        StatusLine = { fg = 'iris', bg = 'pine' },
+        StatusLine = { fg = 'iris', bg = 'base' },
       }
     })
 
