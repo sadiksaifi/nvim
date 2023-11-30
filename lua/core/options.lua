@@ -23,13 +23,13 @@ vim.opt.writebackup = false                            -- if a file is being edi
 vim.opt.expandtab = true                               -- convert tabs to spaces
 vim.opt.shiftwidth = 2                                 -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 2                                    -- insert 2 spaces for a tab
-vim.opt.cursorline = true                              -- highlight the current line
-vim.opt.relativenumber = true                          -- set numbered lines
+vim.opt.cursorline = false                             -- highlight the current line
+vim.opt.number = true                                  -- set numbered lines
 vim.opt.laststatus = 3                                 -- only the last window will always have a status line
 vim.opt.showcmd = false                                -- hide (partial) command in the last line of the screen (for performance)
--- vim.opt.ruler = false                                  -- hide the line and column number of the cursor position
+vim.opt.ruler = false                                  -- hide the line and column number of the cursor position
 vim.opt.numberwidth = 4                                -- minimal number of columns to use for the line number {default 4}
-vim.opt.signcolumn = "yes"                             -- always show the sign column, otherwise it would shift the text each time
+vim.opt.signcolumn = "no"                              -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = false                                   -- display lines as one long line
 vim.opt.scrolloff = 8                                  -- minimal number of screen lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8                              -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
@@ -39,11 +39,12 @@ vim.opt.whichwrap:append("<,>,[,],h,l")                -- keys allowed to move t
 vim.opt.iskeyword:append("-")                          -- treats words with `-` as single words
 vim.opt.formatoptions:remove({ "c", "r", "o" })        -- This is a sequence of letters which describes how automatic formatting is to be done
 vim.opt.linebreak = true                               -- Enable line breaks
--- vim.opt.laststatus = 1                                 -- disables the status line
+vim.opt.laststatus = 1                                 -- disables the status line
 vim.opt.colorcolumn = "80"                             -- side column 
 vim.opt.wildmenu=true                                  -- completion of commands
 vim.opt.wildignorecase=true                            -- case insensitive completion
 vim.opt.wildmode = "longest,full,full"                 -- how the completion is done
+vim.o.guicursor = ""                                   -- disable cursor dynamic behavior
 vim.opt.wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
 vim.opt.fillchars = {
     eob = " ", -- set end-of-buffer character to a space
