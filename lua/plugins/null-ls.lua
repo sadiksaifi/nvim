@@ -26,7 +26,6 @@ return {
 
 				-- Setting up null ls
 				null_ls.setup({
-					border = "rounded",
 					debug = false,
 					sources = {
 						formatting.prettier,

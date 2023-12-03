@@ -43,6 +43,9 @@ keymap("n", "<leader>h", vim.cmd.nohlsearch, opts)
 -- Make current file executable
 keymap("n", "<leader>xx", "<cmd>!chmod +x %<cr>")
 
+-- Netrw
+vim.keymap.set("n", "<leader>.", vim.cmd.Ex, { silent = true, noremap = true })
+
 ------------- Visual Mode -------------
 -- Stay in indent mode
 keymap("x", "<", "<gv", opts)

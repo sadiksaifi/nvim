@@ -3,7 +3,7 @@ return {
 	cmd = "Copilot",
 	event = "InsertEnter",
 	keys = {
-		{ "<leader>ct", "<cmd>Copilot toggle<CR>", desc = "Copilot toggle" },
+		{ "<leader>tc", "<cmd>Copilot toggle<CR>", desc = "Copilot toggle" },
 	},
 	opts = {
 		panel = {
