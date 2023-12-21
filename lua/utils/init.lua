@@ -7,20 +7,13 @@ M.servers = {
   "tsserver",
   "bashls",
   "jsonls",
-  "yamlls",
   "tailwindcss",
-  "gopls",
-  "astro",
-  "jdtls",
-  "pylsp",
-  "clangd",
   "eslint"
 }
 
 M.linters = {
   "prettier",
   "stylua",
-  "black",
 }
 
 M.parsers = {

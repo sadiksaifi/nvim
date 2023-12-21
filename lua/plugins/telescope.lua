@@ -9,4 +9,14 @@ return {
 		{ "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help" },
 		{ "<leader>fk", "<cmd>Telescope keymaps<CR>", desc = "Find keymaps" },
 	},
+	opts = {
+		defaults = {
+			file_ignore_patterns = { "node%_modules/*", ".yarn/*", ".git/*", ".idea/*" },
+		},
+		pickers = {
+			find_files = {
+				hidden = true,
+			},
+		},
+	},
 }

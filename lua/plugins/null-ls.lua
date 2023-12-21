@@ -30,9 +30,6 @@ return {
 					sources = {
 						formatting.prettier,
 						formatting.stylua,
-						formatting.google_java_format,
-						formatting.black.with({ extra_args = { "--fast" } }),
-						diagnostics.flake8,
 					},
 				})
 			end,
