@@ -8,7 +8,8 @@ M.servers = {
   "bashls",
   "jsonls",
   "tailwindcss",
-  "eslint"
+  "eslint",
+  "prismals"
 }
 
 M.linters = {
