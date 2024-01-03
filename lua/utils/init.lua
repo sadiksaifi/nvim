@@ -5,29 +5,19 @@ M.servers = {
   "cssls",
   "html",
   "tsserver",
-  "bashls",
   "jsonls",
   "tailwindcss",
   "eslint",
-  "prismals"
+  "prismals",
 }
 
 M.linters = {
   "prettier",
-  "stylua",
 }
 
 M.parsers = {
   "lua",
-  "vim",
   "markdown",
-  "markdown_inline",
-  "latex",
-  "bash",
-  "python",
-  "cpp",
-  "c",
-  "java",
   "javascript",
   "typescript",
   "tsx",
@@ -35,10 +25,7 @@ M.parsers = {
   "css",
   "json",
   "yaml",
-  "toml",
-  "regex",
   "go",
-  "rust",
   "dockerfile",
 }
 

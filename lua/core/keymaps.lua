@@ -15,12 +15,12 @@ keymap("n", "n", "nzzzv")
 keymap("n", "N", "Nzzzv")
 
 -- Better Window Navigation
-  -- Window Keymap
+-- Window Keymap
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
-  -- Buffer keymap
+-- Buffer keymap
 keymap("n", "<C-H>", "<C-W><C-H>", opts)
 keymap("n", "<C-J>", "<C-W><C-J>", opts)
 keymap("n", "<C-K>", "<C-W><C-K>", opts)
