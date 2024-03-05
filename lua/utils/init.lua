@@ -9,7 +9,7 @@ M.servers = {
   "tailwindcss",
   "eslint",
   "prismals",
-  "volar",
+  "gopls",
   "bashls"
 }
 
