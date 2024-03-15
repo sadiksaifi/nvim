@@ -5,7 +5,6 @@ local opts = { silent = true, noremap = true }
 
 --Map leader keys
 vim.g.mapleader = " "
-vim.b.maplocalleader = ";"
 
 ------------- Normal Mode -------------
 -- Better move around

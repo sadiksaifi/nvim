@@ -13,10 +13,6 @@ M.servers = {
   "bashls"
 }
 
-M.linters = {
-  "prettier",
-}
-
 M.parsers = {
   "lua",
   "markdown",
@@ -29,6 +25,11 @@ M.parsers = {
   "yaml",
   "go",
   "dockerfile",
+}
+
+M.fmtNLint = {
+  "prettier",
+  "stylua"
 }
 
 return M

@@ -6,5 +6,6 @@ return {
   },
   opts = {
     use_magit_keybindings = true,
+    auto_refresh = true,
   },
 }

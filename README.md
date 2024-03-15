@@ -52,7 +52,7 @@ Make sure to remove or move your current `nvim` directory
 
 ```sh
 mv ~/.config/nvim/ ~/.config/nvim-bak/
-git clone https://github.com/sadikeey/nvim.git ~/.config/nvim
+git clone https://github.com/sadiksaifi/nvim.git ~/.config/nvim
 ```
 
 Run `nvim` and wait for the plugins to be installed
@@ -64,131 +64,46 @@ Run `nvim` and wait for the plugins to be installed
 
 ```sh
 nvim
- ├── after
- │   └── ftplugin
- │       ├── c.lua
- │       ├── cpp.lua
- │       ├── json.lua
- │       └── tex.lua
- ├── init.lua
- ├── lua
- │   ├── core
- │   │   ├── autocommands.lua
- │   │   ├── keymaps.lua
- │   │   └── options.lua
- │   ├── lazy-setup.lua
- │   ├── plugins
- │   │   ├── alpha.lua
- │   │   ├── autopairs.lua
- │   │   ├── autotag.lua
- │   │   ├── bufferline.lua
- │   │   ├── cmp.lua
- │   │   ├── colorizer.lua
- │   │   ├── comment.lua
- │   │   ├── copilot.lua
- │   │   ├── devicons.lua
- │   │   ├── dressing.lua
- │   │   ├── fugitive.lua
- │   │   ├── gitsigns.lua
- │   │   ├── indentline.lua
- │   │   ├── lsp.lua
- │   │   ├── lualine.lua
- │   │   ├── markdown-preview.lua
- │   │   ├── mason.lua
- │   │   ├── null-ls.lua
- │   │   ├── nvimtree.lua
- │   │   ├── rosepine.lua
- │   │   ├── snippets.lua
- │   │   ├── tailwind-sorter.lua
- │   │   ├── telescope.lua
- │   │   ├── toggleterm.lua
- │   │   └── treesitter.lua
- │   ├── settings
- │   │   ├── lua_ls.lua
- │   │   └── pyright.lua
- │   └── utils
- │       └── init.lua
- ├── plugin
- │   └── netrw.lua
- └── README.md
-```
-
-## Configuration
-
-### LSP
-
-To add a new LSP
-
-First Enter:
-
-```
-:Mason
-```
-
-and press `i` on the Language Server you wish to install
-
-Next you will need to add the server to this list: [servers](https://github.com/sadikeey/nvim/blob/lua/plugins/lsp.lua)
-
-Note: Builtin LSP doesn't contain all lsps from [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md).
-
-If you want to install any from there, for example terraform_lsp(which adds more functionality than terraformls, like complete resource listing),
-
-1. You can add the any lsp name in [servers](https://github.com/sadikeey/nvim/blob/lua/utils/init.lua) block.
-
-```lua
--- lua/utils/init.lua
-M.servers = {
-  "lua_ls",
-  "cssls",
-  "html",
-  "tsserver",
-  "eslint",
-  "bashls",
-  "jsonls",
-  "yamlls",
-  "tailwindcss",
-}
-```
-
-2. Manually install the binary of the lsp and put it in your path by downloading the binary or through your package manager. For terraform_lsp [example](https://github.com/juliosueiras/terraform-lsp/releases)
-
-
-### Formatters and linters
-
-Make sure the formatter or linter is installed and add it to this setup function: [null-ls](https://github.com/sadikeey/nvim/blob/lua/plugins/null-ls.lua)
-
-1. You can add the lsp name in [linters](https://github.com/sadikeey/nvim/blob/lua/utils/init.lua) block.
-
-```lua
--- lua/utils/init.lua
-M.linters = {
-  "prettier",
-  "stylua",
-}
-```
-
-**NOTE** Some are already setup as examples, remove them if you want
-
-### Installing Plugins
-
-You can install new plugins by creating a file in `~/.config/nvim/lua/plugins` directory.
-
-Then return a lua table from that file for more info check out [lazy.nvim](https://github.com/folke/lazy.nvim).
-
-e.g.:
-```lua
-return {
-  "rose-pine/neovim",
-  name = "rose-pine",
-  lazy = false,
-  priority = 1000,
-  config = function()
-    require("rosepine").setup({})
-
-  -- Set colorscheme after options
-    vim.cmd.colorscheme("rose-pine")
-  end,
-}
+├── after
+│   └── ftplugin
+│       └── json.lua
+├── init.lua
+├── lazy-lock.json
+├── lua
+│   ├── plugins
+│   │   ├── cmp.lua
+│   │   ├── colorizer.lua
+│   │   ├── colorscheme.lua
+│   │   ├── comment.lua
+│   │   ├── copilot.lua
+│   │   ├── devicons.lua
+│   │   ├── harpoon.lua
+│   │   ├── lspconfig.lua
+│   │   ├── luasnip.lua
+│   │   ├── mason.lua
+│   │   ├── neogit.lua
+│   │   ├── none-ls.lua
+│   │   ├── nvimtree.lua
+│   │   ├── schemastore.lua
+│   │   ├── telescope.lua
+│   │   ├── treesitter.lua
+│   │   └── typescript.lua
+│   └── user
+│       ├── autocmds.lua
+│       ├── icons.lua
+│       ├── keymaps.lua
+│       ├── lazy-setup.lua
+│       ├── lspsettings
+│       │   ├── jsonls.lua
+│       │   └── lua_ls.lua
+│       └── options.lua
+├── plugin
+│   └── netrw.lua
+├── README.md
+└── snippets
+    ├── package.json
+    ├── typescript.json
+    └── typescriptreact.json
 ```
 
 ## Acknowledgement
