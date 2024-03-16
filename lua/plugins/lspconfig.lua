@@ -41,20 +41,20 @@ return {
     require("lspconfig.ui.windows").default_options.border = "rounded"
 
     local on_attach = function(client, bufnr)
-      local opts = { noremap = true, silent = true }
-      local keymap = vim.api.nvim_buf_set_keymap
-      keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-      keymap(bufnr, "n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-      keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-      keymap(bufnr, "n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
-      keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-      keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-      keymap(bufnr, "n", "]d", "<cmd>lua vim.diagnostic.goto_next<CR>", opts)
-      keymap(bufnr, "n", "[d", "<cmd>lua vim.diagnostic.goto_prev<CR>", opts)
-      keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action<CR>", opts)
-      keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename<CR>", opts)
-      keymap(bufnr, "n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help<CR>", opts)
-      keymap(bufnr, "n", "<leader>li", "<cmd>LspInfo<CR>", opts)
+      local opts = { noremap = true, silent = true, buffer = bufnr }
+      local keymap = vim.keymap.set
+      keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+      keymap("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+      keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
+      keymap("n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
+      keymap("n", "K", vim.lsp.buf.hover, opts)
+      keymap("n", "gl", vim.diagnostic.open_float, opts)
+      keymap("n", "]d", vim.diagnostic.goto_next, opts)
+      keymap("n", "[d", vim.diagnostic.goto_prev, opts)
+      keymap("n", "<leader>la", vim.lsp.buf.code_action, opts)
+      keymap("n", "<leader>lr", vim.lsp.buf.rename, opts)
+      keymap("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
+      keymap("n", "<leader>li", "<cmd>LspInfo<CR>", opts)
     end
 
     local common_capabilities = function()

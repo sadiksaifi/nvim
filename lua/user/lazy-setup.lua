@@ -13,4 +13,15 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>L", "<cmd>Lazy<CR>", { noremap = true, silent = true })
 
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
+  install = {
+    colorscheme = { "visual_studio_code", "default" },
+  },
+  ui = {
+    border = "rounded",
+  },
+})
