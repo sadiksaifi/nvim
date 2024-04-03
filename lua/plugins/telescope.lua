@@ -22,6 +22,9 @@ return {
           case_mode = "smart_case", -- or "ignore_case" or "respect_case"
         },
       },
+      defaults = {
+        file_ignore_patterns = { "node_modules/", ".yarn/", ".git/", ".idea/" },
+      }
     }
   end
 }

@@ -39,7 +39,6 @@ vim.opt.iskeyword:append("-") -- treats words with `-` as single words
 vim.opt.formatoptions:remove({ "c", "r", "o" }) -- This is a sequence of letters which describes how automatic formatting is to be done
 vim.opt.linebreak = true -- Enable line breaks
 -- vim.opt.laststatus = 1                                 -- disables the status line
-vim.opt.colorcolumn = "80" -- side column
 vim.opt.wildmenu = true -- completion of commands
 vim.opt.wildignorecase = true -- case insensitive completion
 vim.opt.wildmode = "longest,full,full" -- how the completion is done
