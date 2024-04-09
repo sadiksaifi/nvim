@@ -75,5 +75,11 @@
             "}"
         ],
         "description": "Create route handlers for Next.js"
+    },
+    "dog": {
+        "prefix": "dog",
+        "body": [
+            "console.dir($1, { depth: Infinity });"
+        ]
     }
 }
