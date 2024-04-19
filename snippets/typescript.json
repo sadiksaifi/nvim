@@ -11,7 +11,7 @@
         "body": [
             "import { type NextRequest, NextResponse } from \"next/server\";",
             "import { ZodError } from \"zod\";",
-            "import { PrismaClientKnownRequestError } from \"@prisma/client\";",
+            "import { Prisma } from \"@prisma/client\";",
             "",
             "export async function ${1:METHOD}(req: NextRequest) {",
             "\ttry {",
@@ -26,7 +26,7 @@
             "\t\t\t\t{ status: 400 },",
             "\t\t\t);",
             "\t\t}",
-            "\t\tif (error instanceof PrismaClientKnownRequestError) {",
+            "\t\tif (error instanceof Prisma.PrismaClientKnownRequestError) {",
             "\t\t\treturn NextResponse.json(",
             "\t\t\t\t{",
             "\t\t\t\t\terror: error.message,",

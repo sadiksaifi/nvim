@@ -10,7 +10,8 @@ M.servers = {
   "eslint",
   "prismals",
   "gopls",
-  "bashls"
+  "bashls",
+  "astro"
 }
 
 M.parsers = {

@@ -13,7 +13,8 @@ return {
     { "<leader>fb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
   },
   config = function ()
-    require("telescope").setup {
+    local telescope = require("telescope")
+    telescope.setup {
       extensions = {
         fzf = {
           fuzzy = true, -- false will only do exact matching
