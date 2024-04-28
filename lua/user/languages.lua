@@ -11,7 +11,8 @@ M.servers = {
   "prismals",
   "gopls",
   "bashls",
-  "astro"
+  "astro",
+  "yamlls",
 }
 
 M.parsers = {
