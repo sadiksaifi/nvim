@@ -13,6 +13,7 @@ M.servers = {
   "bashls",
   "astro",
   "yamlls",
+  "dockerls"
 }
 
 M.parsers = {
