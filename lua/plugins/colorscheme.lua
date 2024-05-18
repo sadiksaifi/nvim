@@ -1,12 +1,12 @@
 return {
-  "askfiy/visual_studio_code",
+  "LunarVim/darkplus.nvim",
   priority = 100,
   config = function()
-    local code = require "visual_studio_code"
+    local code = require "darkplus"
     code.setup {
       transparent = true,
     }
 
-    vim.cmd "colorscheme visual_studio_code"
+    vim.cmd "colorscheme darkplus"
   end,
 }

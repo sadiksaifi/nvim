@@ -19,7 +19,7 @@ require("lazy").setup("plugins", {
     notify = false,
   },
   install = {
-    colorscheme = { "visual_studio_code", "default" },
+    colorscheme = { "darkplus", "default" },
   },
   ui = {
     border = "rounded",
