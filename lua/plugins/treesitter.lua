@@ -27,6 +27,7 @@ return {
       "typescriptreact",
       "svelte",
       "vue",
+      "astro"
     },
     opts = {},
   },
