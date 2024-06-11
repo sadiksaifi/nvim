@@ -13,7 +13,9 @@ M.servers = {
   "bashls",
   "astro",
   "yamlls",
-  "dockerls"
+  "dockerls",
+  "rust_analyzer",
+  "pylsp"
 }
 
 M.parsers = {
@@ -32,7 +34,7 @@ M.parsers = {
 
 M.fmtNLint = {
   "prettier",
-  "stylua"
+  "stylua",
 }
 
 return M

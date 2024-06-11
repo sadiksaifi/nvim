@@ -38,6 +38,7 @@ return {
       ["."] = true,
       go = false,
       c = false,
+      rust = false,
       cpp = false,
     },
     server_opts_overrides = {},
