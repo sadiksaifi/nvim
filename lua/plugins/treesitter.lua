@@ -12,23 +12,4 @@ return {
       }
     end,
   },
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    opts = {},
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    ft = {
-      "html",
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "svelte",
-      "vue",
-      "astro"
-    },
-    opts = {},
-  },
 }

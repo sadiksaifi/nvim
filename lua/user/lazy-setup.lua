@@ -18,9 +18,9 @@ require("lazy").setup("plugins", {
     enabled = true,
     notify = false,
   },
-  install = {
-    colorscheme = { "darkplus", "default" },
-  },
+  -- install = {
+  --   colorscheme = { "darkplus", "default" },
+  -- },
   ui = {
     border = "rounded",
   },
