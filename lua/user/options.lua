@@ -20,7 +20,6 @@ vim.opt.sidescrolloff = 8 -- minimal number of screen columns to keep to the lef
 vim.opt.wildmenu = true -- completion of commands
 vim.opt.wildignorecase = true -- case insensitive completion
 vim.opt.wildmode = "longest,full,full" -- how the completion is done
-vim.cmd.colorscheme "vim"
 vim.opt.background = "dark"
 vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 
