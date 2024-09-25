@@ -26,9 +26,9 @@ keymap("n", "<C-K>", "<C-W><C-K>", opts)
 keymap("n", "<C-L>", "<C-W><C-L>", opts)
 
 -- Better paste
-keymap("v", "p", '"_dP', opts)
-keymap("n", "x", '"_x', opts)
-keymap("n", "X", '"_X', opts)
+-- keymap("v", "p", '"_dP', opts)
+-- keymap("n", "x", '"_x', opts)
+-- keymap("n", "X", '"_X', opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)

@@ -31,6 +31,17 @@ return {
         { name = "luasnip" },
         { name = "buffer" },
       },
+      window = {
+        completion = {
+          border = "rounded",
+        },
+        documentation = {
+          border = "rounded",
+        },
+      },
+      experimental = {
+        ghost_text = false,
+      },
     }
   end,
 }

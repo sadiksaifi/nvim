@@ -1,12 +1,13 @@
 return {
-  "LunarVim/darkplus.nvim",
+  "Mofiqul/vscode.nvim",
   priority = 100,
   config = function()
-    local code = require "darkplus"
-    code.setup {
-      transparent = true,
-    }
+    local code = require "vscode"
 
-    vim.cmd "colorscheme darkplus"
+		code.setup {
+			transparent = false,
+		}
+
+    vim.cmd "colorscheme vscode"
   end,
 }

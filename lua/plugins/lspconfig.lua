@@ -6,13 +6,13 @@ return {
     local lspconfig = require "lspconfig"
 
     -- diagnostic config
-    vim.diagnostic.config({
+    vim.diagnostic.config {
       virtual_text = true,
       update_in_insert = false,
       underline = true,
-    })
+    }
 
-    local on_attach = function(client, bufnr)
+    local on_attach = function(_, bufnr)
       local opts = { noremap = true, silent = true, buffer = bufnr }
       local keymap = vim.keymap.set
       keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
@@ -53,5 +53,41 @@ return {
 
       lspconfig[server].setup(opts)
     end
+
+    -- Ui stuff
+    local default_diagnostic_config = {
+      signs = {
+        active = true,
+        values = {
+          { name = "DiagnosticSignError", text = "" },
+          { name = "DiagnosticSignWarn", text = "" },
+          { name = "DiagnosticSignHint", text = "" },
+          { name = "DiagnosticSignInfo", text = "" },
+        },
+      },
+      virtual_text = true,
+      update_in_insert = false,
+      underline = true,
+      severity_sort = true,
+      float = {
+        focusable = true,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+      },
+    }
+
+    vim.diagnostic.config(default_diagnostic_config)
+
+    for _, sign in ipairs(vim.tbl_get(vim.diagnostic.config(), "signs", "values") or {}) do
+      vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
+    end
+
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+    vim.lsp.handlers["textDocument/signatureHelp"] =
+      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+    require("lspconfig.ui.windows").default_options.border = "rounded"
   end,
 }
