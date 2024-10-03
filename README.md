@@ -14,50 +14,47 @@
 
 ## About
 
-Blazingly Fast IDE for Web Development using Neovim is a powerful and efficient integrated development environment designed for web developers.
+Blazingly Fast PDE for Web Development using Neovim designed for web developers.
 
 <div id="gif-container" style="display: flex; justify-content: center; align-items: center;">
   <img src="https://data.sadiksaifi.dev/Screenshots/Neovim.gif" loop autoplay>
 </div>
 
-## Setup
+## Install [Neovim 0.10](https://github.com/neovim/neovim/releases/tag/v0.10.0)
 
-### Install [Neovim 0.9](https://github.com/neovim/neovim/releases/tag/v0.9.0)
-
-You can install Neovim with your package manager e.g. `pacman`, `brew`, `apt`, etc.. but remember that when you update your packages Neovim may be upgraded to a newer version.
-
-If you would like to make sure Neovim only updates when you want it to than I recommend **installing from source**:
-
-**NOTE** Verify the required [build prerequisites](https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites) for your system.
-
+### Mac
 ```sh
-git clone https://github.com/neovim/neovim.git
-cd neovim
-git checkout release-0.9
-make CMAKE_BUILD_TYPE=Release
-sudo make install
+brew install neovim
 ```
 
-## Config Dependencies
-- node >= 18
-- npm >= 9
-- gcc
+### Linux
+
+| Distribution | Command |
+| ------------ | ------- |
+| Arch Linux | `sudo pacman -S neovim` |
+| Fedora | `sudo dnf install neovim` |
+| Debian/Ubuntu | Neovim's 0.10 may not be available in Debian/Ubuntu's package repositories. You can install it from the [official repository](https://github.com/neovim/neovim/releases/tag/v0.10.0). |
+
+### Windows
+Install WSL2(Windows Subsystem for Linux) and follow the Linux instructions.
+
+## Required Dependencies
+- node >= 20.x
+- npm >= 10.x
+- gcc/clang
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [fd](https://github.com/sharkdp/fd)
 - [Nerd Fonts](https://www.nerdfonts.com/) - An easy tool to install ([getnf](https://github.com/ronniedroid/getnf))
 
 ## Install the config
 
-Make sure to remove or move your current `nvim` directory
+Make sure to remove or move your current `nvim` config directory.
 
 ```sh
 mv ~/.config/nvim/ ~/.config/nvim-bak/
 git clone https://github.com/sadiksaifi/nvim.git ~/.config/nvim
 ```
-
-Run `nvim` and wait for the plugins to be installed
-
-**NOTE** (You will notice treesitter pulling in a bunch of parsers the next time you open Neovim)
+> Run `nvim` and wait for the plugins to be installed
 
 ## Structure
 `~/.config/nvim`
@@ -65,41 +62,40 @@ Run `nvim` and wait for the plugins to be installed
 ```sh
 nvim
 ├── after
-│   └── ftplugin
-│       └── json.lua
+│   ├── ftplugin
+│   │   └── json.lua
+│   └── queries
+│       └── markdown
+│           └── injections.scm
+├── ftdetect
+│   ├── astro.lua
+│   └── mdx.lua
 ├── init.lua
 ├── lazy-lock.json
 ├── lua
 │   ├── plugins
 │   │   ├── cmp.lua
-│   │   ├── colorizer.lua
 │   │   ├── colorscheme.lua
 │   │   ├── comment.lua
 │   │   ├── copilot.lua
-│   │   ├── devicons.lua
-│   │   ├── harpoon.lua
+│   │   ├── dressing.lua
 │   │   ├── lspconfig.lua
 │   │   ├── luasnip.lua
 │   │   ├── mason.lua
-│   │   ├── neogit.lua
 │   │   ├── none-ls.lua
-│   │   ├── nvimtree.lua
-│   │   ├── schemastore.lua
 │   │   ├── telescope.lua
 │   │   ├── treesitter.lua
 │   │   └── typescript.lua
 │   └── user
 │       ├── autocmds.lua
-│       ├── icons.lua
 │       ├── keymaps.lua
+│       ├── languages.lua
 │       ├── lazy-setup.lua
 │       ├── lspsettings
-│       │   ├── jsonls.lua
-│       │   └── lua_ls.lua
+│       │   └── tsserver.lua
 │       └── options.lua
 ├── plugin
 │   └── netrw.lua
-├── README.md
 └── snippets
     ├── package.json
     ├── typescript.json

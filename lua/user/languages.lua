@@ -9,13 +9,12 @@ M.servers = {
   "tailwindcss",
   "eslint",
   "prismals",
-  "gopls",
+  -- "gopls",
   "bashls",
   "astro",
   "yamlls",
   "dockerls",
-  "rust_analyzer",
-  "pylsp"
+  -- "rust_analyzer",
 }
 
 M.parsers = {
