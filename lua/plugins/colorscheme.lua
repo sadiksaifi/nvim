@@ -1,13 +1,18 @@
 return {
-  "Mofiqul/vscode.nvim",
+  "rose-pine/neovim",
+  name = "rose-pine",
   priority = 100,
+  lazy = false,
   config = function()
-    local code = require "vscode"
+    require("rose-pine").setup {
+      dark_variant = "main", -- main, moon, or dawn
+      styles = {
+        bold = true,
+        italic = true,
+        transparency = true,
+      },
+    }
 
-		code.setup {
-			transparent = false,
-		}
-
-    vim.cmd "colorscheme vscode"
+    vim.cmd.colorscheme "rose-pine"
   end,
 }

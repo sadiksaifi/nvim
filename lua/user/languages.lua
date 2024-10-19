@@ -4,7 +4,7 @@ M.servers = {
   "lua_ls",
   "cssls",
   "html",
-  "tsserver",
+  -- "ts_ls",
   "jsonls",
   "tailwindcss",
   "eslint",
@@ -13,12 +13,13 @@ M.servers = {
   "bashls",
   "astro",
   "yamlls",
-  "dockerls",
+  -- "dockerls",
   -- "rust_analyzer",
 }
 
 M.parsers = {
   "lua",
+	"vim",
   "markdown",
   "javascript",
   "typescript",

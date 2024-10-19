@@ -92,7 +92,7 @@ nvim
 │       ├── languages.lua
 │       ├── lazy-setup.lua
 │       ├── lspsettings
-│       │   └── tsserver.lua
+│       │   └── ts_ls.lua
 │       └── options.lua
 ├── plugin
 │   └── netrw.lua
