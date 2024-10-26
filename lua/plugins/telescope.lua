@@ -12,13 +12,14 @@ return {
     { "<leader>fk", "<cmd>Telescope keymaps<CR>", desc = "Find keymaps" },
     { "<leader>fb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
   },
-  config = function ()
-    local telescope = require("telescope")
+  config = function()
+    local telescope = require "telescope"
     telescope.setup {
       pickers = {
         find_files = {
           theme = "dropdown",
           previewer = false,
+          hidden = true,
         },
       },
       extensions = {
@@ -31,7 +32,7 @@ return {
       },
       defaults = {
         file_ignore_patterns = { "node_modules/", ".yarn/", ".git/", ".idea/" },
-      }
+      },
     }
-  end
+  end,
 }
