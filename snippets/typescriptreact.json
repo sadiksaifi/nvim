@@ -2,9 +2,7 @@
   "React Functional Component": {
     "prefix": "rfc",
     "body": [
-      "interface ${1:ComponentName}Props extends React.HTMLAttributes<HTMLDivElement> {}",
-      "",
-      "const ${1:ComponentName}: React.FC<${1:ComponentName}Props> = ({ className, ...props }) => {",
+      "const ${1:ComponentName}: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => {",
       "  return (",
       "    <div className={cn(\"\", className)} {...props}>",
       "      $0",
@@ -17,9 +15,7 @@
   "React Export Functional Component": {
     "prefix": "rfce",
     "body": [
-      "interface ${1:ComponentName}Props extends React.HTMLAttributes<HTMLDivElement> {}",
-      "",
-      "export const ${1:ComponentName}: React.FC<${1:ComponentName}Props> = ({ className, ...props }) => {",
+      "export const ${1:ComponentName}: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => {",
       "  return (",
       "    <div className={cn(\"\", className)} {...props}>",
       "      $0",
@@ -33,9 +29,7 @@
   "React Functional Component with default export": {
     "prefix": "rfcd",
     "body": [
-      "interface ${1:ComponentName}Props extends React.HTMLAttributes<HTMLDivElement> {}",
-      "",
-      "const ${1:ComponentName}: React.FC<${1:ComponentName}Props> = ({ className, ...props }) => {",
+      "const ${1:ComponentName}: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => {",
       "  return (",
       "    <div className={cn(\"\", className)} {...props}>",
       "      $0",
