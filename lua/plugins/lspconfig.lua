@@ -15,10 +15,10 @@ return {
     local on_attach = function(_, bufnr)
       local opts = { noremap = true, silent = true, buffer = bufnr }
       local keymap = vim.keymap.set
-      keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-      keymap("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-      keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-      keymap("n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
+      keymap("n", "gd", vim.lsp.buf.definition, opts)
+      keymap("n", "gD", vim.lsp.buf.declaration, opts)
+      keymap("n", "gr", vim.lsp.buf.references, opts)
+      keymap("n", "gI", vim.lsp.buf.implementation, opts)
       keymap("n", "K", vim.lsp.buf.hover, opts)
       keymap("n", "gl", vim.diagnostic.open_float, opts)
       keymap("n", "]d", vim.diagnostic.goto_next, opts)
