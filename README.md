@@ -74,14 +74,13 @@ nvim
 ├── lazy-lock.json
 ├── lua
 │   ├── plugins
+│   │   ├── ai.lua
 │   │   ├── cmp.lua
-│   │   ├── colorscheme.lua
 │   │   ├── comment.lua
-│   │   ├── copilot.lua
-│   │   ├── dressing.lua
 │   │   ├── lspconfig.lua
 │   │   ├── luasnip.lua
 │   │   ├── mason.lua
+│   │   ├── neogit.lua
 │   │   ├── none-ls.lua
 │   │   ├── telescope.lua
 │   │   ├── treesitter.lua
@@ -91,11 +90,12 @@ nvim
 │       ├── keymaps.lua
 │       ├── languages.lua
 │       ├── lazy-setup.lua
-│       ├── lspsettings
-│       │   └── ts_ls.lua
 │       └── options.lua
 ├── plugin
-│   └── netrw.lua
+│   ├── colorscheme.lua
+│   ├── netrw.lua
+│   └── statusline.lua
+├── README.md
 └── snippets
     ├── package.json
     ├── typescript.json
