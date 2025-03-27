@@ -3,17 +3,11 @@ return {
   dependencies = {
     {
       "williamboman/mason.nvim",
-      opts = {
-        ui = {
-          border = "rounded",
-        },
-      },
-      keys = {
-        { "<leader>lI", "<cmd>Mason<CR>", desc = "Opens Mason" },
-      },
+      opts = {},
+      cmd = "Mason",
     },
   },
   opts = {
-    ensure_installed = require("user.languages").servers
+    ensure_installed = require("user.languages").servers,
   },
 }
