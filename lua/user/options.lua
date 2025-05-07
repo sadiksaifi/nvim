@@ -23,6 +23,11 @@ vim.opt.wildmode = "longest,full,full" -- how the completion is done
 vim.opt.background = "dark"
 vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 
+if vim.fn.getenv("TERM_PROGRAM") == "ghostty" then
+  vim.opt.title = true
+  vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')}"
+end
+
 -- vim.opt.linebreak = true -- Enable line breaks
 -- vim.opt.laststatus = 1                                 -- disables the status line
 -- vim.o.guicursor = "" -- disable cursor dynamic behavior

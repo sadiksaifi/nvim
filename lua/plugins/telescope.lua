@@ -3,6 +3,7 @@ return {
   dependencies = {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true },
     { "nvim-lua/plenary.nvim" },
+		{ "stevearc/dressing.nvim" },
   },
   cmd = "Telescope",
   keys = {

@@ -11,6 +11,13 @@ return {
     completion = {
       menu = {
         auto_show = true,
+        border = "single",
+      },
+      documentation = {
+        auto_show = true,
+        window = {
+          border = "single",
+        },
       },
     },
     keymap = {
