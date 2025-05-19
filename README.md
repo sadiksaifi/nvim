@@ -76,10 +76,10 @@ nvim
 │   ├── plugins
 │   │   ├── ai.lua
 │   │   ├── cmp.lua
+│   │   ├── colorscheme.lua
 │   │   ├── comment.lua
-│   │   ├── lspconfig.lua
+│   │   ├── lsp.lua
 │   │   ├── luasnip.lua
-│   │   ├── mason.lua
 │   │   ├── neogit.lua
 │   │   ├── none-ls.lua
 │   │   ├── telescope.lua
@@ -90,7 +90,8 @@ nvim
 │       ├── keymaps.lua
 │       ├── languages.lua
 │       ├── lazy-setup.lua
-│       └── options.lua
+│       ├── options.lua
+│       └── ui.lua
 ├── plugin
 │   ├── colorscheme.lua
 │   ├── netrw.lua

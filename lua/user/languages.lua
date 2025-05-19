@@ -9,7 +9,7 @@ M.servers = {
   "tailwindcss",
   "eslint",
   "prismals",
-  -- "gopls",
+  "gopls",
   "bashls",
   "astro",
   "yamlls",
