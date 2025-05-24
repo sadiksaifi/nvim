@@ -4,7 +4,6 @@ M.servers = {
   "lua_ls",
   "cssls",
   "html",
-  -- "ts_ls",
   "jsonls",
   "tailwindcss",
   "eslint",
@@ -13,7 +12,6 @@ M.servers = {
   "bashls",
   "astro",
   "yamlls",
-  -- "dockerls",
   -- "rust_analyzer",
 }
 

@@ -7,6 +7,7 @@ local M = {
       { "nvim-lua/plenary.nvim" },
     },
     cmd = "Telescope",
+    event = { "LspAttach" },
     keys = {
       { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files" },
       { "<leader>ft", "<cmd>Telescope live_grep<CR>", desc = "Find a string" },
