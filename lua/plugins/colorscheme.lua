@@ -1,10 +1,14 @@
 return {
-  "gmr458/vscode_modern_theme.nvim",
-  lazy = false,
-  priority = 1000,
+  "rose-pine/neovim",
+  name = "rose-pine",
   config = function()
-    require("vscode_modern").setup {}
+    require("rose-pine").setup {
+      dark_variant = "main",
+      styles = {
+        transparency = true,
+      },
+    }
 
-    vim.cmd.colorscheme "vscode_modern"
+    vim.cmd "colorscheme rose-pine"
   end,
 }
