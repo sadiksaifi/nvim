@@ -5,6 +5,7 @@ M.servers = {
   "cssls",
   "html",
   "jsonls",
+  "vtsls",
   "tailwindcss",
   "eslint",
   "prismals",
@@ -17,7 +18,7 @@ M.servers = {
 
 M.parsers = {
   "lua",
-	"vim",
+  "vim",
   "markdown",
   "javascript",
   "typescript",

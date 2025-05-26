@@ -41,6 +41,12 @@ local M = {
             vim.lsp.buf.hover { border = "single" }
           end, opts)
           keymap("n", "gl", vim.diagnostic.open_float, opts)
+          keymap("n", "gL", function()
+            vim.cmd.compiler "tsc"
+            vim.opt_local.makeprg = "tsc --noEmit"
+            vim.cmd("silent! make")
+						vim.cmd.copen()
+          end, opts)
           keymap("n", "<leader>la", vim.lsp.buf.code_action, opts)
           keymap("n", "<leader>lr", vim.lsp.buf.rename, opts)
         end

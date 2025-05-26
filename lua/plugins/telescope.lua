@@ -37,6 +37,50 @@ local M = {
           file_ignore_patterns = { "node_modules/", ".yarn/", ".git/", ".idea/" },
         },
       }
+
+      function _G.Select_from_list(items, on_select, opts)
+        local pickers = require "telescope.pickers"
+        local finders = require "telescope.finders"
+        local conf = require("telescope.config").values
+        local actions = require "telescope.actions"
+        local action_state = require "telescope.actions.state"
+        local themes = require "telescope.themes"
+
+        opts = opts or {}
+
+        -- Get dropdown theme and override layout_config
+        local dropdown_opts = themes.get_dropdown {
+          previewer = false,
+          prompt_title = opts.prompt_title or "Select an Item",
+        }
+
+        -- Override the layout_config to make width work
+        dropdown_opts.layout_config = {
+          width = opts.width or 0.5,
+          height = opts.height or 0.4,
+          prompt_position = "top",
+        }
+
+        pickers
+          .new(dropdown_opts, {
+            finder = finders.new_table {
+              results = items,
+            },
+            sorter = conf.generic_sorter(dropdown_opts),
+            attach_mappings = function(prompt_bufnr, map)
+              actions.select_default:replace(function()
+                actions.close(prompt_bufnr)
+                local selection = action_state.get_selected_entry()
+                if selection and on_select then
+                  on_select(selection[1])
+                end
+              end)
+              return true
+            end,
+          })
+          :find()
+      end
+
     end,
   },
 }
