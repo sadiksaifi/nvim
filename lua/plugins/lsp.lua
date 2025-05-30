@@ -9,7 +9,6 @@ local M = {
     automatic_enable = false,
   },
   dependencies = {
-    { "j-hui/fidget.nvim", opts = {} },
     {
       "mason-org/mason.nvim",
       event = { "BufEnter" },
