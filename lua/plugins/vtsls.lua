@@ -19,6 +19,18 @@ return {
       ["Goto project config"] = "goto_project_config",
       ["Goto source definition"] = "goto_source_definition",
       ["Source actions"] = "source_actions",
+      ["Run TSC"] = function()
+        vim.cmd.compiler "tsc"
+        vim.opt_local.makeprg = "tsc --noEmit"
+        vim.cmd "make"
+        vim.cmd.copen()
+      end,
+      ["Run ESLint"] = function()
+        vim.cmd.compiler "eslint"
+        vim.opt_local.makeprg = "eslint ."
+        vim.cmd "make"
+        vim.cmd.copen()
+      end,
     }
     local keys = {}
     for key, _ in pairs(options) do
@@ -27,6 +39,10 @@ return {
 
     vim.keymap.set("n", "<leader>t", function()
       Select_from_list(keys, function(result)
+        if type(options[result]) == "function" then
+          options[result]()
+          return
+        end
         vim.cmd("VtsExec " .. options[result])
       end)
     end, {})
