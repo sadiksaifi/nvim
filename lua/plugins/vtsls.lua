@@ -1,7 +1,6 @@
 return {
   "yioneko/nvim-vtsls",
   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-  ft = { "typescript", "typescriptreact", "typescript.tsx" },
   config = function()
     local options = {
       ["Rename file"] = "rename_file",
@@ -21,7 +20,7 @@ return {
       ["Source actions"] = "source_actions",
       ["Run TSC"] = function()
         vim.cmd.compiler "tsc"
-        vim.opt_local.makeprg = "tsc --noEmit"
+        vim.opt_local.makeprg = "npx tsc --noEmit"
         vim.cmd "make"
         vim.cmd.copen()
       end,
@@ -37,14 +36,16 @@ return {
       table.insert(keys, key)
     end
 
-    vim.keymap.set("n", "<leader>t", function()
-      Select_from_list(keys, function(result)
+    local function select_vtsls()
+      require("telescope").extensions.select_from_list(keys, function(result)
         if type(options[result]) == "function" then
           options[result]()
           return
         end
         vim.cmd("VtsExec " .. options[result])
       end)
-    end, {})
+    end
+
+    vim.keymap.set("n", "<leader>t", select_vtsls, { desc = "Select file" })
   end,
 }

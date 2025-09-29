@@ -1,19 +1,17 @@
 local M = {}
 
 M.servers = {
-  "lua_ls",
-  "cssls",
-  "html",
-  "jsonls",
+  "lua-language-server",
+  "css-lsp",
+  "html-lsp",
+  "json-lsp",
   "vtsls",
-  "tailwindcss",
-  "eslint",
-  "prismals",
+  "tailwindcss-language-server",
+  "eslint-lsp",
   "gopls",
-  "bashls",
-  "astro",
-  "yamlls",
-  -- "rust_analyzer",
+  "bash-language-server",
+  "astro-language-server",
+  "yaml-language-server",
 }
 
 M.parsers = {
