@@ -2,6 +2,7 @@ return {
   {
     "yioneko/nvim-vtsls",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+
     config = function()
       local options = {
         ["Rename file"] = "rename_file",
@@ -32,22 +33,35 @@ return {
           vim.cmd.copen()
         end,
       }
-      local keys = {}
-      for key, _ in pairs(options) do
-        table.insert(keys, key)
-      end
 
       local function select_vtsls()
-        require("telescope").extensions.select_from_list(keys, function(result)
-          if type(options[result]) == "function" then
-            options[result]()
+        -- Get keys for selection
+        local keys = {}
+        for key, _ in pairs(options) do
+          table.insert(keys, key)
+        end
+
+        -- Use Snacks.picker.select - simpler than full picker
+        Snacks.picker.select(keys, {
+          prompt = "TypeScript Actions",
+          format = function(item)
+            return item
+          end,
+        }, function(selected)
+          if not selected then
             return
           end
-          vim.cmd("VtsExec " .. options[result])
+
+          local action = options[selected]
+          if type(action) == "function" then
+            action()
+          else
+            vim.cmd("VtsExec " .. action)
+          end
         end)
       end
 
-      vim.keymap.set("n", "<leader>t", select_vtsls, { desc = "Select file" })
+      vim.keymap.set("n", "<leader>t", select_vtsls, { desc = "TypeScript Actions" })
     end,
   },
   {

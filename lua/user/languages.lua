@@ -1,6 +1,6 @@
 local M = {}
 
-M.servers = {
+M.server_names = {
   "lua-language-server",
   "css-lsp",
   "html-lsp",
@@ -12,6 +12,21 @@ M.servers = {
   "bash-language-server",
   "astro-language-server",
   "yaml-language-server",
+}
+
+M.servers = {
+  "lua_ls",
+  "cssls",
+  "html",
+  "jsonls",
+  "vtsls",
+  "tailwindcss",
+  "eslint",
+  "prismals",
+  "gopls",
+  "bashls",
+  "astro",
+  "yamlls",
 }
 
 M.parsers = {

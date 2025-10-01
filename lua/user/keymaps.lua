@@ -1,7 +1,7 @@
--- Shorten function name
-local keymap = vim.keymap.set
--- Silent keymap option
-local opts = { silent = true, noremap = true }
+-- Shorten keymap function
+local keymap = function(mode, keys, func)
+	vim.keymap.set(mode, keys, func, { silent = true, noremap = true })
+end
 
 --Map leader keys
 vim.g.mapleader = " "
@@ -14,22 +14,22 @@ keymap("n", "n", "nzzzv")
 keymap("n", "N", "Nzzzv")
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+keymap("n", "<C-Up>", ":resize -2<CR>")
+keymap("n", "<C-Down>", ":resize +2<CR>")
+keymap("n", "<C-Left>", ":vertical resize -2<CR>")
+keymap("n", "<C-Right>", ":vertical resize +2<CR>")
 
 -- Clear highlights
-keymap("n", "<leader>h", vim.cmd.nohlsearch, opts)
+keymap("n", "<leader>h", vim.cmd.nohlsearch)
 
 -- Make current file executable
 keymap("n", "<leader>xx", "<cmd>!chmod +x %<cr>")
 
 -- Netrw
-vim.keymap.set("n", "<leader>.", vim.cmd.Ex, { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>.", vim.cmd.Ex, { silent = true, noremap = true })
 
 ------------- Visual Mode -------------
 -- Stay in indent mode
-keymap("x", "<", "<gv", opts)
-keymap("x", ">", ">gv", opts)
-keymap("v", "p", '"_dP', opts) -- Better paste
+keymap("x", "<", "<gv")
+keymap("x", ">", ">gv")
+keymap("v", "p", '"_dP') -- Better paste
