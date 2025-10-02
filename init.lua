@@ -1,5 +1,109 @@
-require "user.options"
-require "user.keymaps"
-require "user.autocmds"
-require "user.ui"
-require "user.lazy-setup"
+-- Keymap
+vim.g.mapleader = " "
+local keymap = function(mode, keys, func)
+	vim.keymap.set(mode, keys, func, { silent = true, noremap = true })
+end
+keymap("n", "<leader>.", vim.cmd.Ex)
+keymap("x", "<", "<gv")
+keymap("x", ">", ">gv")
+keymap("v", "p", '"_dP')
+keymap("n", "<leader>ff", ":Pick files tool=git<cr>")
+keymap("n", "<leader>ft", ":Pick grep_live<cr>")
+keymap("n", "<leader>G", ":Neogit<cr>")
+
+-- Options
+vim.opt.backup = false
+vim.opt.clipboard = "unnamedplus"
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.smartindent = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.swapfile = false
+vim.opt.termguicolors = true
+vim.opt.undofile = true
+vim.opt.writebackup = false
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.cursorline = true
+vim.opt.number = true
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+vim.opt.wildmenu = true
+vim.opt.wildignorecase = true
+vim.opt.wildmode = "longest,full,full"
+vim.opt.background = "dark"
+vim.opt.signcolumn = "yes"
+vim.opt.laststatus = 3
+vim.opt.winborder = "rounded"
+vim.cmd("set completeopt+=noselect")
+
+-- Auto Commands
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+	desc = "Briefly highlight yanked text",
+})
+
+-- Plugins
+vim.pack.add({
+	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/nvim-mini/mini.pick",
+	"https://github.com/NeogitOrg/neogit",
+	"https://github.com/supermaven-inc/supermaven-nvim",
+	"https://github.com/sadiksaifi/line.nvim",
+	"https://github.com/vague2k/vague.nvim",
+	"https://github.com/nvim-treesitter/nvim-treesitter",
+	{ src="https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
+})
+
+-- LSP
+vim.lsp.enable({ 'lua_ls', 'vtsls', 'tailwindcss', 'jsonls', 'eslint', 'cssls', 'html' })
+vim.diagnostic.config {
+	virtual_text = true,
+	underline = true,
+}
+
+require("mini.pick").setup()
+require("supermaven-nvim").setup({
+	keymaps = {
+		accept_suggestion = "<C-l>",
+		clear_suggestion = "<C-h>",
+	},
+})
+require("line").setup({ colors = "default" })
+require("vague").setup()
+vim.cmd("colorscheme vague")
+require("blink.cmp").setup({
+	completion = {
+		menu = {
+			draw = {
+				columns = { { "label", "label_description", gap = 1 }, { "source_name", "kind", gap = 1 } },
+				components = {
+					source_name = {
+						text = function(ctx)
+							return "[" .. ctx.source_name .. "]"
+						end,
+					},
+				},
+			},
+		},
+		documentation = {
+			auto_show = true,
+		},
+		accept = {
+			auto_brackets = {
+				enabled = false,
+			},
+		},
+	},
+})
+
+---@diagnostic disable-next-line: missing-fields
+require("nvim-treesitter.configs").setup {
+	ensure_installed = { "lua", "vim", "javascript", "typescript", "tsx", "html", "css", "json", "yaml", "go" },
+	highlight = { enable = true },
+	indent = { enable = true },
+}

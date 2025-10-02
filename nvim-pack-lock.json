@@ -1,0 +1,45 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "327fff9",
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "1.0.0 - 2.0.0"
+    },
+    "line.nvim": {
+      "rev": "eff27dc",
+      "src": "https://github.com/sadiksaifi/line.nvim"
+    },
+    "mini.completion": {
+      "rev": "27483b0",
+      "src": "https://github.com/nvim-mini/mini.completion"
+    },
+    "mini.pick": {
+      "rev": "96ee37d",
+      "src": "https://github.com/nvim-mini/mini.pick"
+    },
+    "neogit": {
+      "rev": "90dcfa7b",
+      "src": "https://github.com/NeogitOrg/neogit"
+    },
+    "nvim-lspconfig": {
+      "rev": "e688b48",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-treesitter": {
+      "rev": "42fc28ba",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd522",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "supermaven-nvim": {
+      "rev": "07d20fc",
+      "src": "https://github.com/supermaven-inc/supermaven-nvim"
+    },
+    "vague.nvim": {
+      "rev": "27a19ff",
+      "src": "https://github.com/vague2k/vague.nvim"
+    }
+  }
+}
