@@ -57,9 +57,6 @@ return {
           },
         },
       },
-      keymap = {
-        preset = "enter",
-      },
     },
     opts_extend = { "sources.default" },
   },

@@ -29,19 +29,16 @@ return {
 
 			local on_attach = function(args)
 				local client = vim.lsp.get_client_by_id(args.data.client_id)
-				local keymap = function(keys, func)
-					vim.keymap.set("n", keys, func, { buffer = args.buf })
-				end
-
-				keymap("gd", vim.lsp.buf.definition)
-				keymap("gr", vim.lsp.buf.references)
-				keymap("gl", vim.diagnostic.open_float)
-				keymap("<leader>la", vim.lsp.buf.code_action)
-				keymap("<leader>lr", vim.lsp.buf.rename)
 
 				-- TypeScript-specific keymap
 				if client and (client.name == "vtsls" or client.name == "tsserver") then
-					keymap("gl", "<cmd>PrettyTsError<cr>")
+					vim.keymap.set("n", "<C-w>D", "<cmd>PrettyTsError<cr>", { buffer = args.buf })
+					vim.api.nvim_buf_create_user_command(args.buf, "OrganizeImports", function()
+						vim.lsp.buf.code_action {
+							context = { only = { "source.organizeImports" }, diagnostics = {} },
+							apply = true,
+						}
+					end, { desc = "Organize imports using vtsls" })
 				end
 			end
 			vim.api.nvim_create_autocmd("LspAttach", {
