@@ -20,7 +20,7 @@ Blazingly Fast PDE for Web Development using Neovim designed for web developers.
   <img src="https://data.sadiksaifi.dev/Screenshots/Neovim.gif" loop autoplay>
 </div>
 
-## Install [Neovim 0.10](https://github.com/neovim/neovim/releases/tag/v0.10.0)
+## Install [Neovim 0.11](https://github.com/neovim/neovim/releases/tag/v0.11.4)
 
 ### Mac
 ```sh
