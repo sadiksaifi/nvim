@@ -6,5 +6,6 @@ return {
       clear_suggestion = "<C-h>",
       accept_word = "<C-j>",
     },
+    ignore_filetypes = { go = true },
   },
 }

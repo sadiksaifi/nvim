@@ -17,7 +17,7 @@ return {
 	},
 	keys = {
 		{
-			"<leader>lf",
+			"gff",
 			"<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
 			desc = "Format",
 		},

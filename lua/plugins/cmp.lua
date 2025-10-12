@@ -52,13 +52,12 @@ return {
         },
         documentation = {
           auto_show = true,
-          window = {
-            border = "single",
-          },
         },
-      },
-      keymap = {
-        preset = "enter",
+				accept = {
+					auto_brackets = {
+						enabled = false,
+					},
+				},
       },
     },
     opts_extend = { "sources.default" },
