@@ -1,15 +1,35 @@
 return {
-  {
-    "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
-    build = ":TSUpdate",
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = require("user.languages").parsers,
-        highlight = { enable = true },
-        indent = { enable = true },
-      }
-    end,
+  "nvim-treesitter/nvim-treesitter",
+  build = function()
+    require("nvim-treesitter.install").update({ with_sync = true })
+  end,
+  event = { "BufEnter" },
+  opts = {
+    ensure_installed = {
+      "bash",
+      "lua",
+      "vim",
+      "go",
+      "rust",
+      "sql",
+      "html",
+      "css",
+      "javascript",
+      "typescript",
+      "tsx",
+      "svelte",
+      "astro",
+      "markdown",
+      "markdown_inline",
+      "json",
+      "yaml",
+    },
+    sync_install = false,
+    highlight = {
+      enable = true,
+    },
+    indent = {
+      enable = true,
+    },
   },
 }

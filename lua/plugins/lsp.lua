@@ -1,50 +1,162 @@
 return {
-	{
-		"mason-org/mason.nvim",
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile", "BufEnter" },
-		dependencies = {
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			opts = { ensure_installed = require("user.languages").server_names },
-		},
-		opts = {
-			ui = {
-				border = "rounded",
-			},
-		},
-	},
-	{
-		"neovim/nvim-lspconfig",
-		event = { "BufReadPre", "BufNewFile", "BufEnter" },
-		config = function()
-			-- diagnostic config
-			vim.diagnostic.config {
-				virtual_text = true,
-				update_in_insert = true,
-				underline = true,
-			}
+    cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
+    dependencies = {
+      -- LSP installer plugins
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+      -- Lua LSP type definitions
+      "folke/lazydev.nvim",
+      -- Progress indicator for LSP
+      {
+        "j-hui/fidget.nvim",
+        opts = {
+          notification = {
+            window = {
+              winblend = 100,
+            },
+          },
+        },
+      },
+    },
+    config = function()
 
-			for _, server in ipairs(require("user.languages").servers) do
-				vim.lsp.enable(server)
-			end
+      -- List your LSP servers here.
+      local servers = {
+        bashls = {},
+        biome = {},
+        vtsls = {},
+        cssls = {},
+        eslint = {
+          autostart = false,
+          cmd = { "vscode-eslint-language-server", "--stdio", "--max-old-space-size=12288" },
+          settings = { format = false },
+        },
+        html = {},
+        jsonls = {},
+        lua_ls = {
+          settings = {
+            Lua = {
+              runtime = { version = "LuaJIT" },
+              workspace = {
+                checkThirdParty = false,
+              },
+              telemetry = { enabled = false },
+            },
+          },
+        },
+        marksman = {},
+        oxlint = {
+          root_markers = { ".oxlintrc.json" },
+        },
+        sqls = {},
+        tailwindcss = {
+          filetypes = { "typescriptreact", "javascriptreact", "html", "svelte", "astro" },
+        },
+        yamlls = {},
+        svelte = {},
+        astro = {},
+        gopls = {},
+        rust_analyzer = {
+          settings = {
+            ["rust-analyzer"] = {
+              check = { command = "clippy", features = "all" },
+            },
+          },
+        },
+      }
 
-			local on_attach = function(args)
-				local client = vim.lsp.get_client_by_id(args.data.client_id)
+      local formatters = {
+        prettierd = {},
+        oxfmt = {},
+        stylua = {},
+      }
 
-				-- TypeScript-specific keymap
-				if client and (client.name == "vtsls" or client.name == "tsserver") then
-					vim.keymap.set("n", "<C-w>D", "<cmd>PrettyTsError<cr>", { buffer = args.buf })
-					vim.api.nvim_buf_create_user_command(args.buf, "OrganizeImports", function()
-						vim.lsp.buf.code_action {
-							context = { only = { "source.organizeImports" }, diagnostics = {} },
-							apply = true,
-						}
-					end, { desc = "Organize imports using vtsls" })
-				end
-			end
-			vim.api.nvim_create_autocmd("LspAttach", {
-				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-				callback = on_attach,
-			})
-		end,
-	},
+      local manually_installed_servers = { "ocamllsp" }
+      local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
+      local ensure_installed = vim.tbl_filter(function(name)
+        return not vim.tbl_contains(manually_installed_servers, name)
+      end, mason_tools_to_install)
+
+      require("mason-tool-installer").setup({
+        auto_update = true,
+        run_on_start = true,
+        start_delay = 3000,
+        debounce_hours = 12,
+        ensure_installed = ensure_installed,
+      })
+
+      -- LSP servers and clients are able to communicate to each other what features they support.
+      --  By default, Neovim doesn't support everything that is in the LSP specification.
+      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
+      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- Use Blink.cmp capabilities if available, fallback to cmp_nvim_lsp
+      local has_blink, blink = pcall(require, "blink.cmp")
+      if has_blink then
+        capabilities = vim.tbl_deep_extend("force", capabilities, blink.get_lsp_capabilities())
+      else
+        local has_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+        if has_cmp then
+          capabilities = vim.tbl_deep_extend("force", capabilities, cmp_lsp.default_capabilities())
+        end
+      end
+
+      -- Setup LspAttach autocmd for keybindings (replaces on_attach)
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
+        callback = function(event)
+          local bufnr = event.buf
+          local bufname = vim.api.nvim_buf_get_name(bufnr)
+
+          -- Detach from non-file buffers (diffview, fugitive, etc.)
+          if bufname == "" or bufname:match("^diffview://") or bufname:match("^fugitive://") then
+            vim.schedule(function()
+              vim.lsp.buf_detach_client(bufnr, event.data.client_id)
+            end)
+            return
+          end
+
+          -- map_lsp_keybinds(bufnr)
+        end,
+      })
+
+      -- Setup each LSP server using the new vim.lsp.config API
+      for name, config in pairs(servers) do
+        -- Configure the server
+        vim.lsp.config(name, {
+          cmd = config.cmd,
+          capabilities = capabilities,
+          filetypes = config.filetypes,
+          settings = config.settings,
+          root_dir = config.root_dir,
+          root_markers = config.root_markers,
+        })
+
+        -- Enable the server (with autostart setting if specified)
+        if config.autostart == false then
+          -- Don't auto-enable servers with autostart = false
+          -- Users can manually enable with :lua vim.lsp.enable(name)
+        else
+          vim.lsp.enable(name)
+        end
+      end
+
+      -- Setup Mason for managing external LSP servers
+      require("mason").setup({ ui = { border = "rounded" } })
+      require("mason-lspconfig").setup()
+    end,
+  },
 }

@@ -1,14 +1,29 @@
 return {
-  "rose-pine/neovim",
-  name = "rose-pine",
-  config = function()
-    require("rose-pine").setup {
-      dark_variant = "main",
-      styles = {
-        transparency = true,
-      },
-    }
-
-    vim.cmd "colorscheme rose-pine"
-  end,
+  {
+    "catppuccin/nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup({
+        -- float = {
+        -- 	-- transparent = true,
+        -- 	-- solid = false,
+        -- },
+        integrations = {
+          diffview = true,
+          fidget = true,
+          harpoon = true,
+          mason = true,
+          native_lsp = { enabled = true },
+          snacks = {
+            enabled = true,
+            indent_scope_color = "mauve",
+          },
+          render_markdown = true,
+          treesitter = true,
+        },
+      })
+      vim.cmd.colorscheme("catppuccin-mocha")
+    end,
+  },
 }

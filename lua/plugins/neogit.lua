@@ -1,11 +1,17 @@
 return {
   "NeogitOrg/neogit",
-  dependencies = "nvim-lua/plenary.nvim",
-  keys = {
-    { "<leader>G", "<cmd>Neogit<CR>", desc = "Open neogit" },
+  lazy = true,
+  dependencies = {
+    "nvim-lua/plenary.nvim", -- required
+
+    -- Only one of these is needed.
+    "sindrets/diffview.nvim", -- optional
+
+    -- Only one of these is needed.
+    "folke/snacks.nvim", -- optional
   },
-  opts = {
-    use_magit_keybindings = true,
-    auto_refresh = true,
+  cmd = "Neogit",
+  keys = {
+    { "<leader>G", "<cmd>Neogit<cr>", desc = "Show Neogit UI" },
   },
 }

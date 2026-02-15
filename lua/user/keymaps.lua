@@ -1,35 +1,56 @@
--- Shorten keymap function
-local keymap = function(mode, keys, func)
-	vim.keymap.set(mode, keys, func, { silent = true, noremap = true })
-end
+-- Stay in visual mode after indenting
+vim.keymap.set("x", "<", "<gv", { desc = "Shift left" })
+vim.keymap.set("x", ">", ">gv", { desc = "Shift right" })
+-- Paste over selection without yanking the replaced text
+vim.keymap.set("v", "p", '"_dP', { desc = "Paste without yanking replaced text" })
 
---Map leader keys
-vim.g.mapleader = " "
+-- Center buffer while navigating
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center cursor" })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center cursor" })
+vim.keymap.set("n", "{", "{zz", { desc = "Jump to previous paragraph and center" })
+vim.keymap.set("n", "}", "}zz", { desc = "Jump to next paragraph and center" })
+vim.keymap.set("n", "N", "Nzz", { desc = "Search previous and center" })
+vim.keymap.set("n", "n", "nzz", { desc = "Search next and center" })
+vim.keymap.set("n", "G", "Gzz", { desc = "Go to end of file and center" })
+vim.keymap.set("n", "gd", "gdzz", { desc = "Go to definition and center" })
+vim.keymap.set("n", "<C-i>", "<C-i>zz", { desc = "Jump forward in jump list and center" })
+vim.keymap.set("n", "<C-o>", "<C-o>zz", { desc = "Jump backward in jump list and center" })
+vim.keymap.set("n", "%", "%zz", { desc = "Jump to matching bracket and center" })
+vim.keymap.set("n", "*", "*zz", { desc = "Search for word under cursor and center" })
+vim.keymap.set("n", "#", "#zz", { desc = "Search backward for word under cursor and center" })
 
-------------- Normal Mode -------------
--- Better move around
-keymap("n", "<C-d>", "<C-d>zz")
-keymap("n", "<C-u>", "<C-u>zz")
-keymap("n", "n", "nzzzv")
-keymap("n", "N", "Nzzzv")
+-- Copy current file path to clipboard
+vim.keymap.set("n", "<leader>cp", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  vim.notify("Copied absolute path: " .. path)
+end, { desc = "Copy current file path to clipboard" })
 
--- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>")
-keymap("n", "<C-Down>", ":resize +2<CR>")
-keymap("n", "<C-Left>", ":vertical resize -2<CR>")
-keymap("n", "<C-Right>", ":vertical resize +2<CR>")
+-- Harpoon keybinds --
+vim.keymap.set("n", "<leader>ho", function()
+  require("harpoon.ui").toggle_quick_menu()
+end, { desc = "Toggle Harpoon quick menu" })
 
--- Clear highlights
-keymap("n", "<leader>h", vim.cmd.nohlsearch)
+vim.keymap.set("n", "<leader>ha", function()
+  require("harpoon.mark").add_file()
+end, { desc = "Add current file to Harpoon" })
 
--- Make current file executable
-keymap("n", "<leader>xx", "<cmd>!chmod +x %<cr>")
+vim.keymap.set("n", "<leader>1", function()
+  require("harpoon.ui").nav_file(1)
+end, { desc = "Navigate to Harpoon file 1" })
 
--- Netrw
--- vim.keymap.set("n", "<leader>.", vim.cmd.Ex, { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>2", function()
+  require("harpoon.ui").nav_file(2)
+end, { desc = "Navigate to Harpoon file 2" })
 
-------------- Visual Mode -------------
--- Stay in indent mode
-keymap("x", "<", "<gv")
-keymap("x", ">", ">gv")
-keymap("v", "p", '"_dP') -- Better paste
+vim.keymap.set("n", "<leader>3", function()
+  require("harpoon.ui").nav_file(3)
+end, { desc = "Navigate to Harpoon file 3" })
+
+vim.keymap.set("n", "<leader>4", function()
+  require("harpoon.ui").nav_file(4)
+end, { desc = "Navigate to Harpoon file 4" })
+
+vim.keymap.set("n", "<leader>5", function()
+  require("harpoon.ui").nav_file(5)
+end, { desc = "Navigate to Harpoon file 5" })

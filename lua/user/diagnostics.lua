@@ -7,14 +7,14 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.INFO] = "",
     },
   },
-  virtual_text = true,
   update_in_insert = false,
   underline = true,
   severity_sort = true,
+  virtual_text = true,
   float = {
+    border = "rounded",
     focusable = true,
     style = "minimal",
-    border = "rounded",
     source = true,
   },
 }

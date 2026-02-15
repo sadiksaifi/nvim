@@ -1,87 +1,132 @@
+local filtered_message = { "No information available" }
+
 return {
-  {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    ---@type snacks.Config
-    opts = {
-      explorer = {
-        enabled = true,
-        replace_netrw = true, -- Replace netrw with the snacks explorer
+  "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
+  dependencies = {},
+
+  ---@type Snacks.Config
+  opts = {
+    explorer = {
+      enabled = true,
+      win = {
+        width = 10,
       },
-      input = {
-        enabled = true,
-        win = {
-          relative = "cursor",
-          col = -3,
-          row = -3,
-          title_pos = "left",
-        },
-      },
-      indent = {
-        enabled = true,
-        animate = {
-          enabled = false,
-        },
-      },
-      picker = {
-        enabled = true,
-        sources = {
-          smart = {
-            title = "Find Files",
-            layout = {
-              preset = "select", -- "select" layout style
-              preview = false, -- disable preview window
-            },
-          },
-          grep = {
-            layout = {
-              preset = "telescope",
-              preview = true,
-            },
-          },
-        },
-      },
-      styles = {},
     },
-    keys = {
-      -- Top Pickers & Explorer
-      {
-        "<leader>e",
-        function()
-          Snacks.explorer()
-        end,
-        desc = "File Explorer",
+    input = {
+      enabled = true,
+      win = {
+        relative = "cursor",
+        col = -3,
+        row = -3,
+        title_pos = "left",
       },
-      {
-        "<leader>ff",
-        function()
-          Snacks.picker.smart()
-        end,
-        desc = "Smart Find Files",
+    },
+    picker = {
+      enabled = true,
+      sources = {
+        picker = {
+          formatters = {
+            file = {
+              truncate = 10000,
+            },
+          },
+        },
+        files = {
+          title = "Find Files",
+          hidden = true,
+          layout = {
+            preset = "select", -- "select" layout style
+            preview = false, -- disable preview window
+          },
+        },
+        grep = {
+          layout = {
+            preset = "telescope",
+            preview = true,
+          },
+        },
+        explorer = {
+          hidden = true,
+          ignored = true,
+          layout = {
+            preset = "sidebar",
+            layout = {
+              width = 0.24, -- 30% of screen width, adjust as needed
+            },
+          },
+          win = {
+            list = {
+              keys = {
+                ["."] = "",
+                ["-"] = "explorer_close",
+                ["<tab>"] = "",
+                ["<s-tab>"] = "",
+              },
+            },
+          },
+        },
       },
-      {
-        "<leader>ft",
-        function()
-          Snacks.picker.grep()
-        end,
-        desc = "Grep",
-      },
-      {
-        "<leader>s",
-        function()
-          Snacks.scratch()
-        end,
-        desc = "Toggle Scratch Buffer",
-      },
-      {
-        "<leader>S",
-        function()
-          Snacks.scratch.select()
-        end,
-        desc = "Select Scratch Buffer",
-      },
+    },
+    rename = { enabled = true },
+    terminal = {},
+    styles = {},
+    indent = { enabled = true },
+  },
+
+  init = function()
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "VeryLazy",
+      callback = function()
+        local notify = Snacks.notifier.notify
+        ---@diagnostic disable-next-line: duplicate-set-field
+        Snacks.notifier.notify = function(message, level, opts)
+          for _, msg in ipairs(filtered_message) do
+            if message == msg then
+              return nil
+            end
+          end
+          return notify(message, level, opts)
+        end
+      end,
+    })
+  end,
+  keys = {
+    {
+      "<leader>e",
+      function()
+        Snacks.explorer()
+      end,
+      desc = "[E]xplorer",
+    },
+    {
+      "<leader>ff",
+      function()
+        Snacks.picker.files()
+      end,
+      desc = "[F]ind [F]iles",
+    },
+    {
+      "<leader>ft",
+      function()
+        Snacks.picker.grep()
+      end,
+      desc = "[F]ind [T]ext",
+    },
+    {
+      "<leader>s",
+      function()
+        Snacks.scratch()
+      end,
+      desc = "[F]ind [S]cratch",
+    },
+    {
+      "<leader>S",
+      function()
+        Snacks.scratch.select()
+      end,
+      desc = "[S]elect [S]cratch",
     },
   },
-  { "nvim-mini/mini.icons", version = false },
 }
