@@ -30,5 +30,5 @@ lazy.setup({
   ui = {
     border = "rounded",
   },
-  checker = { enabled = true },
+  checker = { enabled = false },
 })

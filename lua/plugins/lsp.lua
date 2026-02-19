@@ -5,6 +5,8 @@ return {
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        { path = "snacks.nvim" },
+        { path = "lazy.nvim" },
       },
     },
   },
@@ -52,6 +54,9 @@ return {
               runtime = { version = "LuaJIT" },
               workspace = {
                 checkThirdParty = false,
+                library = {
+                  vim.env.VIMRUNTIME,
+                },
               },
               telemetry = { enabled = false },
             },

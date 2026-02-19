@@ -1,12 +1,14 @@
 local filtered_message = { "No information available" }
+local excluded_paths = { "node_modules", "ios", "dist", "build", "android", ".bin", ".tmp", "target" }
 
 return {
+  ---@module 'snacks'
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
   dependencies = {},
 
-  ---@type Snacks.Config
+  ---@type snacks.Config
   opts = {
     explorer = {
       enabled = true,
@@ -36,15 +38,17 @@ return {
         files = {
           title = "Find Files",
           hidden = true,
+          ignored = true,
+          exclude = excluded_paths,
           layout = {
             preset = "select", -- "select" layout style
-            preview = false, -- disable preview window
           },
         },
         grep = {
+          hidden = false,
+          ignored = false,
           layout = {
             preset = "telescope",
-            preview = true,
           },
         },
         explorer = {
