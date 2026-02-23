@@ -39,7 +39,8 @@ return {
       local servers = {
         bashls = {},
         biome = {},
-        vtsls = {},
+        -- vtsls = {},
+        tsgo = {},
         cssls = {},
         eslint = {
           autostart = false,
