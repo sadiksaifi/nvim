@@ -1,6 +1,18 @@
 local filtered_message = { "No information available" }
-local excluded_paths =
-  { "node_modules", "ios", "dist", "build", "android", ".bin", ".tmp", "target", ".next", ".expo", ".tanstack" }
+local excluded_paths = {
+  "node_modules",
+  "ios",
+  "dist",
+  "build",
+  "android",
+  ".bin",
+  ".tmp",
+  "target",
+  ".next",
+  ".expo",
+  ".tanstack",
+  ".alchemy",
+}
 
 return {
   ---@module 'snacks'
