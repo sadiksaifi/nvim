@@ -1,29 +1,12 @@
 return {
-  {
-    "catppuccin/nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("catppuccin").setup({
-        -- float = {
-        -- 	-- transparent = true,
-        -- 	-- solid = false,
-        -- },
-        integrations = {
-          diffview = true,
-          fidget = true,
-          harpoon = true,
-          mason = true,
-          native_lsp = { enabled = true },
-          snacks = {
-            enabled = true,
-            indent_scope_color = "mauve",
-          },
-          render_markdown = true,
-          treesitter = true,
-        },
-      })
-      vim.cmd.colorscheme("catppuccin-mocha")
-    end,
-  },
+  "vague-theme/vague.nvim",
+  lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  priority = 1000, -- make sure to load this before all the other plugins
+  config = function()
+    -- NOTE: you do not need to call setup if you don't want to.
+    require("vague").setup({
+      transparent = true,
+    })
+    vim.cmd("colorscheme vague")
+  end,
 }

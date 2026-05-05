@@ -13,6 +13,8 @@ local excluded_paths = {
   ".tanstack",
   ".alchemy",
   ".vercel",
+  ".turbo",
+  "out"
 }
 
 return {

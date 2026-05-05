@@ -92,3 +92,6 @@ vim.opt.winborder = "rounded"
 vim.g.netrw_banner = 0
 vim.g.netrw_browser_split = 4 -- open in a prior window
 vim.g.netrw_list_hide = "^\\./\\?$,^\\.\\./\\?$" -- hide ./ and ../
+
+-- Experimental UI
+require("vim._core.ui2").enable({})

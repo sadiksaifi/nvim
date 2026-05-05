@@ -48,7 +48,14 @@ return {
           settings = { format = false },
         },
         html = {},
-        jsonls = {},
+        jsonls = {
+          settings = {
+            json = {
+              validate = { enable = true },
+              format = { enable = false },
+            },
+          },
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -159,6 +166,27 @@ return {
           vim.lsp.enable(name)
         end
       end
+
+      -- Biome for JSON linting in non-biome projects (trailing commas, etc.)
+      -- Regular biome (from servers table) handles biome-configured projects.
+      vim.lsp.config("biome_json", {
+        cmd = { "biome", "lsp-proxy" },
+        capabilities = capabilities,
+        filetypes = { "json" },
+        root_dir = function(bufnr, on_dir)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local has_biome_config = vim.fs.find({ "biome.json", "biome.jsonc" }, {
+            path = fname,
+            upward = true,
+            stop = vim.uv.os_homedir(),
+          })[1]
+          if has_biome_config then
+            return
+          end
+          on_dir(vim.fn.fnamemodify(fname, ":h"))
+        end,
+      })
+      vim.lsp.enable("biome_json")
 
       -- Setup Mason for managing external LSP servers
       require("mason").setup({ ui = { border = "rounded" } })
