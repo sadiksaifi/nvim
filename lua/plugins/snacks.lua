@@ -91,6 +91,17 @@ return {
     },
     rename = { enabled = true },
     terminal = {},
+    lazygit = {
+      configure = true,
+      config = {
+        os = { editPreset = "nvim-remote" },
+        gui = { nerdFontsVersion = "3" },
+      },
+      win = {
+        -- Use the current window instead of Snacks' default floating window.
+        position = "current",
+      },
+    },
     styles = {},
     indent = { enabled = true },
   },
@@ -133,6 +144,20 @@ return {
         Snacks.picker.grep()
       end,
       desc = "[F]ind [T]ext",
+    },
+    {
+      "<leader>G",
+      function()
+        Snacks.lazygit()
+      end,
+      desc = "Lazy[G]it",
+    },
+    {
+      "<leader>gf",
+      function()
+        Snacks.lazygit.log_file()
+      end,
+      desc = "Lazy[G]it current [F]ile log",
     },
     {
       "<leader>s",
