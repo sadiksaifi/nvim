@@ -55,6 +55,34 @@ return {
               format = { enable = false },
             },
           },
+          handlers = {
+            ["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+              -- jsonls reports JSONC trailing commas/comments as parser diagnostics
+              -- (codes 519/521). Keep schema diagnostics, but drop these false positives.
+              if result and result.diagnostics then
+                local bufnr = vim.uri_to_bufnr(result.uri)
+                if vim.bo[bufnr].filetype == "jsonc" then
+                  result.diagnostics = vim.tbl_filter(function(diagnostic)
+                    local code = tostring(diagnostic.code or "")
+                    return code ~= "519" and code ~= "521"
+                  end, result.diagnostics)
+                end
+              end
+
+              vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+            end,
+            ["textDocument/diagnostic"] = function(err, result, ctx, config)
+              -- Nvim 0.12 uses LSP pull diagnostics for jsonls, so filter there too.
+              if result and result.items and ctx.bufnr and vim.bo[ctx.bufnr].filetype == "jsonc" then
+                result.items = vim.tbl_filter(function(diagnostic)
+                  local code = tostring(diagnostic.code or "")
+                  return code ~= "519" and code ~= "521"
+                end, result.items)
+              end
+
+              vim.lsp.diagnostic.on_diagnostic(err, result, ctx, config)
+            end,
+          },
         },
         lua_ls = {
           settings = {
@@ -148,12 +176,25 @@ return {
 
       -- Setup each LSP server using the new vim.lsp.config API
       for name, config in pairs(servers) do
+        local server_capabilities = capabilities
+
+        -- tsgo currently registers a watcher for the virtual URI
+        -- `bundled:///libs/**/*`, which Neovim 0.12 rejects as a filesystem glob.
+        if name == "tsgo" then
+          server_capabilities = vim.deepcopy(capabilities)
+          server_capabilities.workspace = server_capabilities.workspace or {}
+          server_capabilities.workspace.didChangeWatchedFiles = {
+            dynamicRegistration = false,
+          }
+        end
+
         -- Configure the server
         vim.lsp.config(name, {
           cmd = config.cmd,
-          capabilities = capabilities,
+          capabilities = server_capabilities,
           filetypes = config.filetypes,
           settings = config.settings,
+          handlers = config.handlers,
           root_dir = config.root_dir,
           root_markers = config.root_markers,
         })
@@ -172,7 +213,7 @@ return {
       vim.lsp.config("biome_json", {
         cmd = { "biome", "lsp-proxy" },
         capabilities = capabilities,
-        filetypes = { "json" },
+        filetypes = { "json", "jsonc" },
         root_dir = function(bufnr, on_dir)
           local fname = vim.api.nvim_buf_get_name(bufnr)
           local has_biome_config = vim.fs.find({ "biome.json", "biome.jsonc" }, {
