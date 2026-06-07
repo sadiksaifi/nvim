@@ -25,6 +25,7 @@ return {
         typescriptreact = { "oxfmt", "biome", "prettierd", stop_after_first = true },
         json = { "oxfmt", "biome", "prettierd", stop_after_first = true },
         svelte = { "oxfmt", "prettierd", stop_after_first = true },
+        swift = { "swiftformat" },
         lua = { "stylua" },
       },
       formatters = {

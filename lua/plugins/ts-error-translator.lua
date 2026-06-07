@@ -10,6 +10,7 @@ return {
       "typescript-tools",
       "volar",
       "vtsls",
+      "tsgo"
     },
   },
 }

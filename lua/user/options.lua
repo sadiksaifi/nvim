@@ -1,6 +1,6 @@
 -- Enable relative line numbers
 vim.opt.nu = true
-vim.opt.rnu = true
+-- vim.opt.rnu = true
 
 -- Disable showing the mode below the statusline
 vim.opt.showmode = false

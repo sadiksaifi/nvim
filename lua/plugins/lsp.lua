@@ -12,7 +12,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-		event = { "BufReadPre", "BufNewFile", "BufEnter" },
+    event = { "BufReadPre", "BufNewFile", "BufEnter" },
     cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
     dependencies = {
       -- LSP installer plugins
@@ -34,13 +34,43 @@ return {
       },
     },
     config = function()
+      local function translate_ts_diagnostic_message(message, code)
+        local ok, translator = pcall(require, "ts-error-translator")
+        if not ok then
+          return message
+        end
+
+        local message_with_code = code and ("TS" .. tostring(code) .. ": " .. message) or message
+        local parsed = translator.parse_errors(message_with_code)
+        if #parsed > 0 and parsed[1].improvedError then
+          return parsed[1].improvedError.body
+        end
+
+        return message
+      end
+
+      local function translate_tsgo_pull_diagnostics(err, result, ctx, config)
+        if result and result.items then
+          for _, diagnostic in ipairs(result.items) do
+            if diagnostic.message then
+              diagnostic.message = translate_ts_diagnostic_message(diagnostic.message, diagnostic.code)
+            end
+          end
+        end
+
+        vim.lsp.diagnostic.on_diagnostic(err, result, ctx, config)
+      end
 
       -- List your LSP servers here.
       local servers = {
         bashls = {},
         biome = {},
         -- vtsls = {},
-        tsgo = {},
+        tsgo = {
+          handlers = {
+            ["textDocument/diagnostic"] = translate_tsgo_pull_diagnostics,
+          },
+        },
         cssls = {},
         eslint = {
           autostart = false,
@@ -117,16 +147,24 @@ return {
             },
           },
         },
+        sourcekit = {
+          cmd = vim.fn.executable("xcrun") == 1 and { "xcrun", "sourcekit-lsp" } or { "sourcekit-lsp" },
+        },
       }
 
       local formatters = {
         prettierd = {},
         oxfmt = {},
         stylua = {},
+        swiftformat = {},
       }
 
-      local manually_installed_servers = { "ocamllsp" }
-      local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
+      local linters = {
+        swiftlint = {},
+      }
+
+      local manually_installed_servers = { "ocamllsp", "sourcekit" }
+      local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters, linters))
       local ensure_installed = vim.tbl_filter(function(name)
         return not vim.tbl_contains(manually_installed_servers, name)
       end, mason_tools_to_install)
@@ -186,6 +224,20 @@ return {
           server_capabilities.workspace.didChangeWatchedFiles = {
             dynamicRegistration = false,
           }
+        elseif name == "sourcekit" then
+          server_capabilities = vim.tbl_deep_extend("force", vim.deepcopy(capabilities), {
+            workspace = {
+              didChangeWatchedFiles = {
+                dynamicRegistration = true,
+              },
+            },
+            textDocument = {
+              diagnostic = {
+                dynamicRegistration = true,
+                relatedDocumentSupport = true,
+              },
+            },
+          })
         end
 
         -- Configure the server

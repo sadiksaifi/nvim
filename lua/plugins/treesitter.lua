@@ -11,6 +11,7 @@ return {
       "vim",
       "go",
       "rust",
+      "swift",
       "sql",
       "html",
       "css",
