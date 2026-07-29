@@ -5,9 +5,6 @@ return {
     "nvim-lua/plenary.nvim", -- required
 
     -- Only one of these is needed.
-    "sindrets/diffview.nvim", -- optional
-
-    -- Only one of these is needed.
     "folke/snacks.nvim", -- optional
   },
   cmd = "Neogit",

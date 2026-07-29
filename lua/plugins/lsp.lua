@@ -34,43 +34,43 @@ return {
       },
     },
     config = function()
-      local function translate_ts_diagnostic_message(message, code)
-        local ok, translator = pcall(require, "ts-error-translator")
-        if not ok then
-          return message
-        end
-
-        local message_with_code = code and ("TS" .. tostring(code) .. ": " .. message) or message
-        local parsed = translator.parse_errors(message_with_code)
-        if #parsed > 0 and parsed[1].improvedError then
-          return parsed[1].improvedError.body
-        end
-
-        return message
-      end
-
-      local function translate_tsgo_pull_diagnostics(err, result, ctx, config)
-        if result and result.items then
-          for _, diagnostic in ipairs(result.items) do
-            if diagnostic.message then
-              diagnostic.message = translate_ts_diagnostic_message(diagnostic.message, diagnostic.code)
-            end
-          end
-        end
-
-        vim.lsp.diagnostic.on_diagnostic(err, result, ctx, config)
-      end
+      -- local function translate_ts_diagnostic_message(message, code)
+      --   local ok, translator = pcall(require, "ts-error-translator")
+      --   if not ok then
+      --     return message
+      --   end
+      --
+      --   local message_with_code = code and ("TS" .. tostring(code) .. ": " .. message) or message
+      --   local parsed = translator.parse_errors(message_with_code)
+      --   if #parsed > 0 and parsed[1].improvedError then
+      --     return parsed[1].improvedError.body
+      --   end
+      --
+      --   return message
+      -- end
+      --
+      -- local function translate_tsgo_pull_diagnostics(err, result, ctx, config)
+      --   if result and result.items then
+      --     for _, diagnostic in ipairs(result.items) do
+      --       if diagnostic.message then
+      --         diagnostic.message = translate_ts_diagnostic_message(diagnostic.message, diagnostic.code)
+      --       end
+      --     end
+      --   end
+      --
+      --   vim.lsp.diagnostic.on_diagnostic(err, result, ctx, config)
+      -- end
 
       -- List your LSP servers here.
       local servers = {
         bashls = {},
         biome = {},
-        -- vtsls = {},
-        tsgo = {
-          handlers = {
-            ["textDocument/diagnostic"] = translate_tsgo_pull_diagnostics,
-          },
-        },
+        vtsls = {},
+        -- tsgo = {
+        --   handlers = {
+        --     ["textDocument/diagnostic"] = translate_tsgo_pull_diagnostics,
+        --   },
+        -- },
         cssls = {},
         eslint = {
           autostart = false,
@@ -283,7 +283,11 @@ return {
 
       -- Setup Mason for managing external LSP servers
       require("mason").setup({ ui = { border = "rounded" } })
-      require("mason-lspconfig").setup()
+      require("mason-lspconfig").setup({
+        -- Servers are enabled explicitly above; automatic enabling would ignore
+        -- per-server `autostart = false` and can attach stale installed servers.
+        automatic_enable = false,
+      })
     end,
   },
 }
