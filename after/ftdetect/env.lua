@@ -1,10 +1,13 @@
 vim.filetype.add({
   filename = {
-    [".env"] = "sh",
-    [".dev.vars"] = "sh",
+    [".env"] = "dotenv",
+    [".dev.vars"] = "dotenv",
   },
   pattern = {
-    ["%.env%..*"] = "sh",
-    [".*%.vars"] = "sh",
+    ["%.env%..*"] = "dotenv",
+    [".*%.vars"] = "dotenv",
   },
 })
+
+-- Reuse Bash highlighting without attaching shell-specific tooling such as bashls.
+vim.treesitter.language.register("bash", "dotenv")
