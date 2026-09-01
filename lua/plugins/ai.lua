@@ -1,10 +1,17 @@
 return {
-  "supermaven-inc/supermaven-nvim",
+  "zbirenbaum/copilot.lua",
+  cmd = "Copilot",
+  event = "InsertEnter",
   opts = {
-    keymaps = {
-      accept_suggestion = "<C-l>",
-      clear_suggestion = "<C-h>",
-      accept_word = "<C-j>",
+    panel = { enabled = false },
+    suggestion = {
+      enabled = true,
+      auto_trigger = true,
+      keymap = {
+        accept = "<C-l>",
+        dismiss = "<C-h>",
+        accept_word = "<C-j>",
+      },
     },
   },
 }
