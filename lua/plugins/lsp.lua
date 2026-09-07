@@ -34,43 +34,97 @@ return {
       },
     },
     config = function()
-      -- local function translate_ts_diagnostic_message(message, code)
-      --   local ok, translator = pcall(require, "ts-error-translator")
-      --   if not ok then
-      --     return message
-      --   end
-      --
-      --   local message_with_code = code and ("TS" .. tostring(code) .. ": " .. message) or message
-      --   local parsed = translator.parse_errors(message_with_code)
-      --   if #parsed > 0 and parsed[1].improvedError then
-      --     return parsed[1].improvedError.body
-      --   end
-      --
-      --   return message
-      -- end
-      --
-      -- local function translate_tsgo_pull_diagnostics(err, result, ctx, config)
-      --   if result and result.items then
-      --     for _, diagnostic in ipairs(result.items) do
-      --       if diagnostic.message then
-      --         diagnostic.message = translate_ts_diagnostic_message(diagnostic.message, diagnostic.code)
-      --       end
-      --     end
-      --   end
-      --
-      --   vim.lsp.diagnostic.on_diagnostic(err, result, ctx, config)
-      -- end
+      local function translate_ts_diagnostic_message(message, code)
+        local ok, translator = pcall(require, "ts-error-translator")
+        if not ok then
+          return message
+        end
+
+        local message_with_code = code and ("TS" .. tostring(code) .. ": " .. message) or message
+        local parsed = translator.parse_errors(message_with_code)
+        if #parsed > 0 and parsed[1].improvedError then
+          return parsed[1].improvedError.body
+        end
+
+        return message
+      end
+
+      local function translate_tsc_pull_diagnostics(err, result, ctx)
+        if result and result.items then
+          for _, diagnostic in ipairs(result.items) do
+            if diagnostic.message then
+              diagnostic.message = translate_ts_diagnostic_message(diagnostic.message, diagnostic.code)
+            end
+          end
+        end
+
+        vim.lsp.diagnostic.on_diagnostic(err, result, ctx)
+      end
+
+      local native_tsc_by_root = {}
+      local default_typescript_root_dir = assert(vim.lsp.config.vtsls.root_dir, "vtsls root resolver is unavailable")
+
+      local function get_native_tsc(root_dir)
+        local cached = native_tsc_by_root[root_dir]
+        if cached ~= nil then
+          return cached or nil
+        end
+
+        local tsc = vim.fs.joinpath(root_dir, "node_modules", ".bin", "tsc")
+        if vim.fn.executable(tsc) == 1 then
+          local result = vim.system({ tsc, "--version" }, { text = true }):wait()
+          local version = result.code == 0 and vim.version.parse(result.stdout or "") or nil
+          if version and version.major >= 7 then
+            native_tsc_by_root[root_dir] = tsc
+            return tsc
+          end
+        end
+
+        native_tsc_by_root[root_dir] = false
+        return nil
+      end
+
+      local function legacy_typescript_root_dir(bufnr, on_dir)
+        default_typescript_root_dir(bufnr, function(root_dir)
+          if not get_native_tsc(root_dir) then
+            on_dir(root_dir)
+          end
+        end)
+      end
+
+      local function native_typescript_root_dir(bufnr, on_dir)
+        default_typescript_root_dir(bufnr, function(root_dir)
+          if get_native_tsc(root_dir) then
+            on_dir(root_dir)
+          end
+        end)
+      end
+
+      local function start_native_typescript(dispatchers, config)
+        local tsc = get_native_tsc(config.root_dir)
+        assert(tsc, "project-local TypeScript 7 executable not found")
+        return vim.lsp.rpc.start({ tsc, "--lsp", "--stdio" }, dispatchers)
+      end
 
       -- List your LSP servers here.
       local servers = {
         bashls = {},
         biome = {},
-        vtsls = {},
-        -- tsgo = {
-        --   handlers = {
-        --     ["textDocument/diagnostic"] = translate_tsgo_pull_diagnostics,
-        --   },
-        -- },
+        vtsls = {
+          root_dir = legacy_typescript_root_dir,
+          settings = {
+            vtsls = {
+              autoUseWorkspaceTsdk = true,
+            },
+          },
+        },
+        tsc = {
+          cmd = start_native_typescript,
+          root_dir = native_typescript_root_dir,
+          handlers = {
+            ["textDocument/diagnostic"] = translate_tsc_pull_diagnostics,
+          },
+        },
         cssls = {},
         eslint = {
           autostart = false,
@@ -86,7 +140,7 @@ return {
             },
           },
           handlers = {
-            ["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+            ["textDocument/publishDiagnostics"] = function(err, result, ctx)
               -- jsonls reports JSONC trailing commas/comments as parser diagnostics
               -- (codes 519/521). Keep schema diagnostics, but drop these false positives.
               if result and result.diagnostics then
@@ -99,9 +153,9 @@ return {
                 end
               end
 
-              vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+              vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
             end,
-            ["textDocument/diagnostic"] = function(err, result, ctx, config)
+            ["textDocument/diagnostic"] = function(err, result, ctx)
               -- Nvim 0.12 uses LSP pull diagnostics for jsonls, so filter there too.
               if result and result.items and ctx.bufnr and vim.bo[ctx.bufnr].filetype == "jsonc" then
                 result.items = vim.tbl_filter(function(diagnostic)
@@ -110,7 +164,7 @@ return {
                 end, result.items)
               end
 
-              vim.lsp.diagnostic.on_diagnostic(err, result, ctx, config)
+              vim.lsp.diagnostic.on_diagnostic(err, result, ctx)
             end,
           },
         },
@@ -163,7 +217,8 @@ return {
         swiftlint = {},
       }
 
-      local manually_installed_servers = { "ocamllsp", "sourcekit" }
+      -- tsc is supplied by each TypeScript 7 project, not Mason.
+      local manually_installed_servers = { "ocamllsp", "sourcekit", "tsc" }
       local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters, linters))
       local ensure_installed = vim.tbl_filter(function(name)
         return not vim.tbl_contains(manually_installed_servers, name)
@@ -216,9 +271,9 @@ return {
       for name, config in pairs(servers) do
         local server_capabilities = capabilities
 
-        -- tsgo currently registers a watcher for the virtual URI
+        -- Native TypeScript registers a watcher for the virtual URI
         -- `bundled:///libs/**/*`, which Neovim 0.12 rejects as a filesystem glob.
-        if name == "tsgo" then
+        if name == "tsc" then
           server_capabilities = vim.deepcopy(capabilities)
           server_capabilities.workspace = server_capabilities.workspace or {}
           server_capabilities.workspace.didChangeWatchedFiles = {

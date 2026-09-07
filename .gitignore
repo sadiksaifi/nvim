@@ -46,3 +46,11 @@ vscode-java-test/
 
 # MacOS Slop
 .DS_Store
+
+# ai slop
+.snap
+.agents
+.codex
+.pi
+.opencode
+.claude
