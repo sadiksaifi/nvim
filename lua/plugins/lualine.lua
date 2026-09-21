@@ -3,8 +3,6 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     config = function()
-      local harpoon = require("harpoon.mark")
-
       local function truncate_branch_name(branch)
         if not branch or branch == "" then
           return ""
@@ -60,23 +58,6 @@ return {
         end,
       })
 
-      local function harpoon_component()
-        local total_marks = harpoon.get_length()
-
-        if total_marks == 0 then
-          return ""
-        end
-
-        local current_mark = "—"
-
-        local mark_idx = harpoon.get_current_index()
-        if mark_idx ~= nil then
-          current_mark = tostring(mark_idx)
-        end
-
-        return string.format("󱡅 %s/%d", current_mark, total_marks)
-      end
-
       -- vcsigns diff stats component
       -- local function vcsigns_diff()
       --   local bufnr = vim.api.nvim_get_current_buf()
@@ -99,7 +80,6 @@ return {
         sections = {
           lualine_b = {
             { get_vcs_info, icon = "" },
-            harpoon_component,
             {
               "diff",
               source = function()
