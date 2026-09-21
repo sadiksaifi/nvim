@@ -217,9 +217,15 @@ return {
         swiftlint = {},
       }
 
+      local debuggers = {
+        delve = {},
+        ["js-debug-adapter"] = {},
+      }
+
       -- tsc is supplied by each TypeScript 7 project, not Mason.
       local manually_installed_servers = { "ocamllsp", "sourcekit", "tsc" }
-      local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters, linters))
+      local mason_tools_to_install =
+        vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters, linters, debuggers))
       local ensure_installed = vim.tbl_filter(function(name)
         return not vim.tbl_contains(manually_installed_servers, name)
       end, mason_tools_to_install)
