@@ -1,5 +1,5 @@
 return {
-  dir = vim.fn.expand("~/Projects/leader-k.nvim"),
+  "sadiksaifi/leader-k.nvim",
   name = "leader-k",
   cmd = "LeaderK",
   keys = {
