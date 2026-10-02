@@ -54,6 +54,11 @@ vim.opt.termguicolors = true
 -- Enable the sign column to prevent the screen from jumping
 vim.opt.signcolumn = "yes"
 
+-- Enable OSC52 clipboard support when using SSH
+if vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
+  vim.g.clipboard = 'osc52'
+end
+
 -- Enable access to System Clipboard
 vim.opt.clipboard = "unnamed,unnamedplus"
 
