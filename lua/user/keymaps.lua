@@ -21,7 +21,7 @@ vim.keymap.set("n", "#", "#zz", { desc = "Search backward for word under cursor 
 
 -- Copy current file path to clipboard
 vim.keymap.set("n", "<leader>cp", function()
-  local path = vim.fn.expand("%:p")
+  local path = vim.fn.expand("%:p:~")
   vim.fn.setreg("+", path)
-  vim.notify("Copied absolute path: " .. path)
+  vim.notify("Copied path: " .. path)
 end, { desc = "Copy current file path to clipboard" })
