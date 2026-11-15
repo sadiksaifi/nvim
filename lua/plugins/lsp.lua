@@ -214,6 +214,7 @@ return {
       }
 
       local linters = {
+        ["golangci-lint"] = {},
         swiftlint = {},
       }
 

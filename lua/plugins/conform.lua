@@ -19,6 +19,7 @@ return {
         lsp_format = "fallback",
       },
       formatters_by_ft = {
+        go = { "golangci-lint" },
         astro = { "oxfmt", "biome", "prettierd", stop_after_first = true },
         javascript = { "oxfmt", "biome", "prettierd", stop_after_first = true },
         typescript = { "oxfmt", "biome", "prettierd", stop_after_first = true },
@@ -29,6 +30,11 @@ return {
         lua = { "stylua" },
       },
       formatters = {
+        ["golangci-lint"] = {
+          cwd = function(self, ctx)
+            return require("conform.util").root_file({ ".golangci.yml", ".golangci.yaml", "go.mod" })(self, ctx)
+          end,
+        },
         oxfmt = {
           prepend_args = function(_, ctx)
             local project_config = vim.fs.find({ ".oxfmtrc.json", ".oxfmtrc.jsonc" }, {

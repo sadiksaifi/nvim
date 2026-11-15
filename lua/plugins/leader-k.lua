@@ -1,5 +1,5 @@
 return {
-  "sadiksaifi/leader-k.nvim",
+  dir = "~/Projects/leader-k.nvim/",
   name = "leader-k",
   cmd = "LeaderK",
   keys = {
@@ -9,7 +9,7 @@ return {
         require("leader-k").open()
       end,
       mode = { "n", "x" },
-      desc = "Edit selection with AI",
+      desc = "Open the leader-k sidebar; in Visual mode, attach the selection",
     },
   },
   ---@type leader_k.Config
