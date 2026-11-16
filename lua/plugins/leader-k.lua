@@ -1,7 +1,6 @@
 return {
-  dir = "~/Projects/leader-k.nvim/",
-  name = "leader-k",
-  cmd = "LeaderK",
+  "sadiksaifi/leader-k.nvim",
+  cmd = { "LeaderK", "LeaderKAdd", "LeaderKNew" },
   keys = {
     {
       "<leader>k",
